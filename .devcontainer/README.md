@@ -335,7 +335,7 @@ VS Codeは自動的に`devcontainer.local.json`を読み込み、`devcontainer.j
 
 ```jsonc
 {
-  "name": "sdd-template",
+  "name": "test_updated_sdd",
   "build": {
     "dockerfile": "Dockerfile",
   },
@@ -451,7 +451,7 @@ https://github.com/yourusername/dotfiles
 
 ```jsonc
 {
-  "name": "sdd-template",
+  "name": "test_updated_sdd",
   "build": {
     "dockerfile": "Dockerfile",
   },
@@ -533,7 +533,7 @@ echo "Dotfiles installed!"
 
 ```jsonc
 {
-  "name": "sdd-template",
+  "name": "test_updated_sdd",
   "build": {
     "dockerfile": "Dockerfile",
   },

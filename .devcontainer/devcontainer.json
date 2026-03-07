@@ -1,16 +1,16 @@
 {
-  "name": "sdd-template",
+  "name": "test_updated_sdd",
   "build": {
     "dockerfile": "Dockerfile"
   },
   "remoteUser": "vscode",
-  "workspaceFolder": "/workspaces/sdd-template",
+  "workspaceFolder": "/workspaces/test_updated_sdd",
   "features": {
     "ghcr.io/stu-bell/devcontainer-features/claude-code:0": {},
     "ghcr.io/devcontainers/features/docker-in-docker:2": {}
   },
   "remoteEnv": {
-    "NAVI_PATH": "/workspaces/sdd-template/.navi/cheats"
+    "NAVI_PATH": "/workspaces/test_updated_sdd/.navi/cheats"
   },
   "postCreateCommand": "mise trust && mise install && (tldr --update || true) && echo '初回セットアップを実行します...'",
   "postAttachCommand": "bash scripts/setup.sh",
