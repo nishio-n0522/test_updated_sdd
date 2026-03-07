@@ -1,0 +1,467 @@
+% git, 基本
+
+# Gitのバージョンを確認する
+git version
+
+# Gitの設定一覧を表示する
+git config --list
+
+# ユーザー名を設定する（グローバル）
+git config --global user.name "<name>"
+
+# メールアドレスを設定する（グローバル）
+git config --global user.email "<email>"
+
+# リポジトリごとのユーザー名を設定する
+git config user.name "<name>"
+
+# リポジトリごとのメールアドレスを設定する
+git config user.email "<email>"
+
+# デフォルトブランチ名を設定する
+git config --global init.defaultBranch main
+
+# エイリアスを設定する
+git config --global alias.<alias_name> '<git_command>'
+
+# 新しいリポジトリを初期化する
+git init
+
+# リモートリポジトリをクローンする
+git clone <url>
+
+# 特定のブランチを指定してクローンする
+git clone -b <branch_name> <url>
+
+# シャロークローンする（最新コミットのみ）
+git clone --depth 1 <url>
+
+
+% git, 状態確認
+
+# 作業ツリーの状態を確認する
+git status
+
+# 作業ツリーの状態を短縮形式で確認する
+git status -s
+
+# ステージされていない変更の差分を表示する
+git diff
+
+# ステージされた変更の差分を表示する
+git diff --staged
+
+# 特定のファイルの差分を表示する
+git diff <file>
+
+# 2つのブランチの差分を表示する
+git diff <branch1>..<branch2>
+
+# 2つのブランチの差分（ファイル名のみ）を表示する
+git diff --name-only <branch1>..<branch2>
+
+# 特定のコミット間の差分を表示する
+git diff <commit1>..<commit2>
+
+# 変更された行数の統計を表示する
+git diff --stat
+
+
+% git, ステージング・コミット
+
+# ファイルをステージングする
+git add <file>
+
+# 変更されたファイルをすべてステージングする（新規ファイルは除く）
+git add -u
+
+# すべての変更をステージングする
+git add -A
+
+# パッチモードでステージングする（変更を対話的に選択）
+git add -p <file>
+
+# ステージングを取り消す
+git restore --staged <file>
+
+# すべてのステージングを取り消す
+git restore --staged .
+
+# 作業ツリーの変更を取り消す（注意：変更が失われます）
+git restore <file>
+
+# コミットする
+git commit -m "<message>"
+
+# ステージングとコミットを同時に行う（追跡済みファイルのみ）
+git commit -am "<message>"
+
+# 直前のコミットメッセージを修正する
+git commit --amend -m "<message>"
+
+# 直前のコミットにファイルを追加する（メッセージは変更しない）
+git commit --amend --no-edit
+
+# 空のコミットを作成する（CI トリガー用など）
+git commit --allow-empty -m "<message>"
+
+
+% git, ブランチ
+
+# ローカルブランチ一覧を表示する
+git branch
+
+# リモートブランチも含めた一覧を表示する
+git branch -a
+
+# ブランチの最終コミット情報も表示する
+git branch -v
+
+# マージ済みのブランチ一覧を表示する
+git branch --merged
+
+# 未マージのブランチ一覧を表示する
+git branch --no-merged
+
+# 新しいブランチを作成する
+git branch <branch_name>
+
+# ブランチを作成して切り替える
+git switch -c <branch_name>
+
+# ブランチを切り替える
+git switch <branch_name>
+
+# 直前のブランチに戻る
+git switch -
+
+# リモート追跡ブランチに切り替える
+git switch --track <remote>/<branch_name>
+
+# ブランチ名を変更する
+git branch -m <old_name> <new_name>
+
+# 現在のブランチ名を変更する
+git branch -m <new_name>
+
+# ブランチを削除する（マージ済みのみ）
+git branch -d <branch_name>
+
+# ブランチを強制削除する
+git branch -D <branch_name>
+
+# リモートブランチを削除する
+git push <remote> --delete <branch_name>
+
+$ branch_name: git branch --format='%(refname:short)'
+$ remote: echo -e "origin\nupstream"
+
+
+% git, マージ・リベース
+
+# ブランチをマージする
+git merge <branch_name>
+
+# マージコミットを作らずにマージする（fast-forward）
+git merge --ff-only <branch_name>
+
+# 必ずマージコミットを作成する（no-fast-forward）
+git merge --no-ff <branch_name>
+
+# マージを中止する
+git merge --abort
+
+# リベースする
+git rebase <branch_name>
+
+# リベースを中止する
+git rebase --abort
+
+# リベースのコンフリクトを解消して続行する
+git rebase --continue
+
+# チェリーピックで特定のコミットを取り込む
+git cherry-pick <commit_hash>
+
+# チェリーピックを中止する
+git cherry-pick --abort
+
+$ branch_name: git branch --format='%(refname:short)'
+
+
+% git, リモート操作
+
+# リモートリポジトリ一覧を表示する
+git remote -v
+
+# リモートリポジトリを追加する
+git remote add <remote_name> <url>
+
+# リモートリポジトリのURLを変更する
+git remote set-url <remote_name> <url>
+
+# リモートリポジトリを削除する
+git remote remove <remote_name>
+
+# リモートの変更を取得する（マージはしない）
+git fetch <remote>
+
+# すべてのリモートの変更を取得する
+git fetch --all
+
+# リモートの不要な追跡ブランチを削除する
+git fetch --prune
+
+# リモートの変更を取得してマージする
+git pull
+
+# リベースでプルする
+git pull --rebase
+
+# ブランチをリモートにプッシュする
+git push <remote> <branch_name>
+
+# 上流ブランチを設定してプッシュする
+git push -u <remote> <branch_name>
+
+# すべてのブランチをプッシュする
+git push --all
+
+# タグをプッシュする
+git push <remote> <tag_name>
+
+# すべてのタグをプッシュする
+git push --tags
+
+$ remote: git remote
+$ branch_name: git branch --format='%(refname:short)'
+
+
+% git, ログ・履歴
+
+# コミットログを表示する
+git log
+
+# コミットログを1行ずつ表示する
+git log --oneline
+
+# コミットログをグラフ表示する
+git log --oneline --graph --all
+
+# 直近N件のコミットログを表示する
+git log -n <count>
+
+# 特定のファイルのコミット履歴を表示する
+git log -- <file>
+
+# 変更内容を含むコミットログを表示する
+git log -p
+
+# 特定の著者のコミットを表示する
+git log --author="<author>"
+
+# 日付範囲でコミットを絞り込む
+git log --after="<date>" --before="<date>"
+
+# コミットメッセージで検索する
+git log --grep="<keyword>"
+
+# コード変更内容で検索する（pickaxe）
+git log -S "<keyword>"
+
+# ファイルの各行の最終変更者を表示する
+git blame <file>
+
+# 特定の行範囲のblameを表示する
+git blame -L <start>,<end> <file>
+
+# 特定のコミットの詳細を表示する
+git show <commit_hash>
+
+# 特定のコミットの特定ファイルを表示する
+git show <commit_hash>:<file>
+
+# リファレンスログを表示する（ブランチの移動履歴）
+git reflog
+
+
+% git, スタッシュ
+
+# 変更を一時退避する
+git stash
+
+# メッセージ付きで一時退避する
+git stash push -m "<message>"
+
+# 特定のファイルだけ一時退避する
+git stash push <file>
+
+# 未追跡ファイルも含めて一時退避する
+git stash -u
+
+# スタッシュ一覧を表示する
+git stash list
+
+# 最新のスタッシュを適用する（スタッシュは残す）
+git stash apply
+
+# 特定のスタッシュを適用する
+git stash apply stash@{<number>}
+
+# 最新のスタッシュを適用して削除する
+git stash pop
+
+# スタッシュの内容を表示する
+git stash show -p stash@{<number>}
+
+# 特定のスタッシュを削除する
+git stash drop stash@{<number>}
+
+# すべてのスタッシュを削除する
+git stash clear
+
+
+% git, 取り消し・リセット
+
+# 直前のコミットを取り消す（変更はステージに残す）
+git reset --soft HEAD~1
+
+# 直前のコミットを取り消す（変更は作業ツリーに残す）
+git reset --mixed HEAD~1
+
+# 直前のコミットを取り消す（変更も破棄する）
+git reset --hard HEAD~1
+
+# 特定のコミットまでリセットする（変更は作業ツリーに残す）
+git reset <commit_hash>
+
+# 特定のコミットまでリセットする（変更も破棄する）
+git reset --hard <commit_hash>
+
+# コミットを打ち消す新しいコミットを作成する
+git revert <commit_hash>
+
+# マージコミットを打ち消す
+git revert -m 1 <commit_hash>
+
+# 追跡されていないファイルを確認する（ドライラン）
+git clean -n
+
+# 追跡されていないファイルを削除する
+git clean -f
+
+# 追跡されていないファイルとディレクトリを削除する
+git clean -fd
+
+
+% git, タグ
+
+# タグ一覧を表示する
+git tag
+
+# パターンでタグを絞り込む
+git tag -l "<pattern>"
+
+# 軽量タグを作成する
+git tag <tag_name>
+
+# 注釈付きタグを作成する
+git tag -a <tag_name> -m "<message>"
+
+# 特定のコミットにタグを付ける
+git tag -a <tag_name> <commit_hash> -m "<message>"
+
+# タグの詳細を表示する
+git show <tag_name>
+
+# タグを削除する
+git tag -d <tag_name>
+
+# リモートのタグを削除する
+git push <remote> --delete <tag_name>
+
+$ tag_name: git tag
+$ remote: git remote
+
+
+% git, サブモジュール
+
+# サブモジュールを追加する
+git submodule add <url> <path>
+
+# サブモジュールを初期化・更新する
+git submodule update --init --recursive
+
+# すべてのサブモジュールを最新に更新する
+git submodule update --remote
+
+# サブモジュールの状態を確認する
+git submodule status
+
+
+% git, ワークツリー
+
+# ワークツリーを追加する
+git worktree add <path> <branch_name>
+
+# ワークツリー一覧を表示する
+git worktree list
+
+# ワークツリーを削除する
+git worktree remove <path>
+
+# 不要なワークツリー情報をクリーンアップする
+git worktree prune
+
+$ branch_name: git branch --format='%(refname:short)'
+
+
+% git, 便利なテクニック
+
+# 特定のファイルをGit管理から除外する（.gitignoreに追加）
+echo "<pattern>" >> .gitignore
+
+# 追跡済みファイルをGit管理から除外する（ファイルは残す）
+git rm --cached <file>
+
+# ディレクトリ以下をGit管理から除外する（ファイルは残す）
+git rm -r --cached <directory>
+
+# .gitignoreの変更を反映する（キャッシュクリア）
+git rm -r --cached . && git add -A
+
+# コミット数を表示する
+git rev-list --count HEAD
+
+# リポジトリのサイズを確認する
+git count-objects -vH
+
+# 特定のファイルの変更回数を確認する
+git log --oneline -- <file> | wc -l
+
+# 最初のコミットを表示する
+git log --reverse --oneline | head -1
+
+# 2つのブランチの共通祖先を見つける
+git merge-base <branch1> <branch2>
+
+# 特定のコミットがどのブランチに含まれるか調べる
+git branch --contains <commit_hash>
+
+# コンフリクトしているファイル一覧を表示する
+git diff --name-only --diff-filter=U
+
+# バイセクトでバグの原因コミットを特定する（開始）
+git bisect start
+
+# バイセクトで現在のコミットを「悪い」とマークする
+git bisect bad
+
+# バイセクトで現在のコミットを「良い」とマークする
+git bisect good <commit_hash>
+
+# バイセクトを終了する
+git bisect reset
+
+$ branch1: git branch --format='%(refname:short)'
+$ branch2: git branch --format='%(refname:short)'

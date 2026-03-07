@@ -1,0 +1,200 @@
+% curl, 基本
+
+# curlのバージョンを確認する
+curl --version
+
+# ヘルプを表示する
+curl --help
+
+# URLのコンテンツを取得する
+curl <url>
+
+# レスポンスをファイルに保存する
+curl -o <output_file> <url>
+
+# URLと同じファイル名で保存する
+curl -O <url>
+
+# 複数URLを続けてダウンロードする
+curl -O <url1> -O <url2>
+
+# ダウンロードの進捗を表示する
+curl --progress-bar -O <url>
+
+# サイレントモード（エラーのみ表示）
+curl -s <url>
+
+# 詳細な情報を表示する（デバッグ）
+curl -v <url>
+
+
+% curl, HTTPメソッド・リクエスト
+
+# GETリクエストを送る
+curl -X GET <url>
+
+# POSTリクエストを送る
+curl -X POST <url>
+
+# JSONデータをPOSTする
+curl -X POST -H "Content-Type: application/json" -d '{"key":"value"}' <url>
+
+# JSONファイルをPOSTする
+curl -X POST -H "Content-Type: application/json" -d @<json_file> <url>
+
+# フォームデータをPOSTする
+curl -X POST -F "key=value" <url>
+
+# URLエンコードされたデータをPOSTする
+curl -X POST -d "key=value&key2=value2" <url>
+
+# PUTリクエストを送る
+curl -X PUT -H "Content-Type: application/json" -d '{"key":"value"}' <url>
+
+# PATCHリクエストを送る
+curl -X PATCH -H "Content-Type: application/json" -d '{"key":"value"}' <url>
+
+# DELETEリクエストを送る
+curl -X DELETE <url>
+
+
+% curl, ヘッダー
+
+# カスタムヘッダーを追加する
+curl -H "Authorization: Bearer <token>" <url>
+
+# 複数のヘッダーを追加する
+curl -H "Content-Type: application/json" -H "Accept: application/json" <url>
+
+# User-Agentを指定する
+curl -A "Mozilla/5.0" <url>
+
+# Refererを指定する
+curl -e "https://example.com" <url>
+
+# レスポンスヘッダーのみ表示する
+curl -I <url>
+
+# レスポンスヘッダーとボディを表示する
+curl -i <url>
+
+
+% curl, 認証
+
+# Basic認証を使用する
+curl -u <username>:<password> <url>
+
+# Bearer トークン認証を使用する
+curl -H "Authorization: Bearer <token>" <url>
+
+# APIキー認証を使用する
+curl -H "x-api-key: <api_key>" <url>
+
+# Supabase APIにリクエストする
+curl -H "apikey: <anon_key>" -H "Authorization: Bearer <anon_key>" <supabase_url>/rest/v1/<table>
+
+# .netrcファイルの認証情報を使用する
+curl --netrc <url>
+
+
+% curl, リダイレクト・タイムアウト
+
+# リダイレクトに従う
+curl -L <url>
+
+# リダイレクトの最大回数を指定する
+curl -L --max-redirs 5 <url>
+
+# タイムアウトを設定する（秒）
+curl --connect-timeout 10 <url>
+
+# 最大転送時間を設定する（秒）
+curl --max-time 30 <url>
+
+# 接続を維持する
+curl --keepalive-time 60 <url>
+
+
+% curl, SSL・セキュリティ
+
+# SSL証明書の検証をスキップする（開発用のみ）
+curl -k <url>
+
+# クライアント証明書を使用する
+curl --cert <cert_file> --key <key_file> <url>
+
+# CA証明書を指定する
+curl --cacert <ca_cert_file> <url>
+
+# SSL/TLSバージョンを指定する
+curl --tlsv1.2 <url>
+
+
+% curl, プロキシ
+
+# プロキシを使用する
+curl -x <proxy_url>:<port> <url>
+
+# プロキシ認証を使用する
+curl -x <proxy_url>:<port> -U <username>:<password> <url>
+
+# プロキシをバイパスする
+curl --noproxy "*" <url>
+
+
+% curl, ファイル操作
+
+# ファイルをアップロードする（multipart）
+curl -F "file=@<upload_file>" <url>
+
+# 複数ファイルをアップロードする
+curl -F "file1=@<file1>" -F "file2=@<file2>" <url>
+
+# レジュームダウンロードする
+curl -C - -O <url>
+
+# 指定範囲のバイトをダウンロードする
+curl -r 0-1023 -O <url>
+
+# ダウンロード速度を制限する
+curl --limit-rate 1M -O <url>
+
+
+% curl, デバッグ・出力制御
+
+# リクエストとレスポンスの詳細を表示する
+curl -v <url>
+
+# HTTPのバージョンを指定する
+curl --http1.1 <url>
+curl --http2 <url>
+
+# レスポンスのステータスコードのみ取得する
+curl -o /dev/null -s -w "%{http_code}" <url>
+
+# レスポンス時間を計測する
+curl -o /dev/null -s -w "time_total: %{time_total}s\n" <url>
+
+# DNSの解決時間を確認する
+curl -o /dev/null -s -w "time_namelookup: %{time_namelookup}s\n" <url>
+
+# curlの設定をファイルから読み込む
+curl -K <config_file>
+
+# jqと組み合わせてJSONを整形する
+curl -s <url> | jq '.'
+
+# Cookieを保存する
+curl -c <cookie_file> <url>
+
+# Cookieを送信する
+curl -b <cookie_file> <url>
+
+# Cookieを文字列で指定する
+curl -b "key=value; key2=value2" <url>
+
+$ url: echo "https://api.example.com"
+$ token: echo "your-token-here"
+$ output_file: echo "output.json"
+$ json_file: find . -name "*.json" -not -path "*/node_modules/*" 2>/dev/null | head -10
+$ upload_file: find . -type f -not -path "*/node_modules/*" 2>/dev/null | head -10

@@ -1,0 +1,155 @@
+% eslint, 基本
+
+# ESLintのバージョンを確認する
+npx eslint --version
+
+# ヘルプを表示する
+npx eslint --help
+
+# ファイルをlintする
+npx eslint <file>
+
+# ディレクトリ以下をすべてlintする
+npx eslint <directory>
+
+# 特定の拡張子のファイルをlintする
+npx eslint --ext .ts,.tsx <directory>
+
+# すべてのファイルをlintする（package.jsonのscriptから実行推奨）
+npm run lint
+
+
+% eslint, 自動修正
+
+# 自動修正可能な問題を修正する
+npx eslint --fix <file>
+
+# ディレクトリ以下を自動修正する
+npx eslint --fix <directory>
+
+# 修正のプレビューを表示する（実際には修正しない）
+npx eslint --fix-dry-run <file>
+
+# package.jsonのscriptから実行する
+npm run lint:fix
+
+
+% eslint, 出力・レポート
+
+# 詳細な出力でlintする
+npx eslint --format=verbose <file>
+
+# JSON形式でレポートを出力する
+npx eslint --format=json <file>
+
+# レポートをファイルに保存する
+npx eslint --format=json --output-file=eslint-report.json <directory>
+
+# 警告をエラーとして扱う
+npx eslint --max-warnings=0 <directory>
+
+# エラーのみ表示する（警告を非表示）
+npx eslint --quiet <file>
+
+
+% eslint, 設定・デバッグ
+
+# 現在の設定を確認する
+npx eslint --print-config <file>
+
+# 特定のルールを無効にする（コマンドラインから）
+npx eslint --rule '{"no-console": "off"}' <file>
+
+# プラグインを確認する
+npx eslint --debug <file> 2>&1 | grep plugin
+
+# キャッシュを有効にしてlintする（高速化）
+npx eslint --cache <directory>
+
+# キャッシュを削除する
+npx eslint --cache --cache-strategy=content <directory>
+
+# 無視パターンを確認する
+npx eslint --print-config <file> | jq '.ignorePatterns'
+
+# インラインコメントでルールを無効にする例
+# eslint-disable-next-line no-console
+# eslint-disable
+
+
+% prettier, 基本
+
+# Prettierのバージョンを確認する
+npx prettier --version
+
+# ヘルプを表示する
+npx prettier --help
+
+# ファイルをフォーマットする
+npx prettier --write <file>
+
+# ディレクトリ以下をすべてフォーマットする
+npx prettier --write <directory>
+
+# すべてのファイルをフォーマットする（package.jsonのscriptから実行推奨）
+npm run format
+
+
+% prettier, チェック・確認
+
+# フォーマットが必要かチェックする（変更はしない）
+npx prettier --check <file>
+
+# ディレクトリ以下をチェックする
+npx prettier --check <directory>
+
+# package.jsonのscriptから実行する
+npm run format:check
+
+# フォーマット結果をSTDOUTに出力する（ファイルは変更しない）
+npx prettier <file>
+
+# フォーマット前後の差分を確認する
+npx prettier --check <file> 2>&1
+
+
+% prettier, 設定
+
+# 現在の設定を確認する
+npx prettier --find-config-path <file>
+
+# 設定ファイルの内容を表示する
+npx prettier --support-info
+
+# 特定のパーサーを指定する
+npx prettier --parser=typescript <file>
+
+# シングルクォートを使用する（コマンドラインオプション）
+npx prettier --single-quote --write <file>
+
+# タブ幅を指定する
+npx prettier --tab-width=2 --write <file>
+
+# セミコロンなしでフォーマットする
+npx prettier --no-semi --write <file>
+
+# 行の最大幅を指定する
+npx prettier --print-width=100 --write <file>
+
+# Tailwind CSSクラスをソートする（prettier-plugin-tailwindcss）
+# プラグインが設定済みの場合、--writeで自動的に適用される
+
+
+% eslint-prettier, まとめて実行
+
+# lint + formatチェックをまとめて実行する
+npm run check
+
+# lint修正 + format修正をまとめて実行する
+npm run lint:fix && npm run format
+
+# 変更ファイルのみlintする（lint-stagedを使用）
+npx lint-staged
+
+$ file: find . -name "*.ts" -o -name "*.tsx" | grep -v node_modules | head -20 2>/dev/null
+$ directory: echo -e "src\nsrc/features\nsrc/shared\nsrc/app"

@@ -1,0 +1,206 @@
+% tmux, 基本
+
+# tmuxのバージョンを確認する
+tmux -V
+
+# 新しいセッションを起動する
+tmux
+
+# 名前付きセッションを起動する
+tmux new-session -s <session_name>
+tmux new -s <session_name>
+
+# セッションを一覧表示する
+tmux list-sessions
+tmux ls
+
+# セッションにアタッチする
+tmux attach-session -t <session_name>
+tmux a -t <session_name>
+
+# 最後のセッションにアタッチする
+tmux attach
+
+# セッションをデタッチする（セッションを維持したまま抜ける）
+# キーバインド: Ctrl+b d
+
+# セッションを終了する
+tmux kill-session -t <session_name>
+
+# すべてのセッションを終了する
+tmux kill-server
+
+
+% tmux, セッション操作（キーバインド）
+
+# プレフィックスキー
+# Ctrl+b （デフォルト）
+
+# セッションをデタッチする
+# Ctrl+b d
+
+# セッション一覧を表示する
+# Ctrl+b s
+
+# セッション名を変更する
+# Ctrl+b $
+
+# 次のセッションに移動する
+# Ctrl+b )
+
+# 前のセッションに移動する
+# Ctrl+b (
+
+
+% tmux, ウィンドウ操作
+
+# 新しいウィンドウを作成する（コマンド）
+tmux new-window -t <session_name>
+
+# ウィンドウを一覧表示する（コマンド）
+tmux list-windows
+
+# 新しいウィンドウを作成する（キーバインド）
+# Ctrl+b c
+
+# ウィンドウ一覧を表示する
+# Ctrl+b w
+
+# 次のウィンドウに移動する
+# Ctrl+b n
+
+# 前のウィンドウに移動する
+# Ctrl+b p
+
+# 番号でウィンドウを選択する
+# Ctrl+b 0-9
+
+# ウィンドウ名を変更する
+# Ctrl+b ,
+
+# ウィンドウを閉じる
+# Ctrl+b &
+
+# 直前のウィンドウに戻る
+# Ctrl+b l
+
+
+% tmux, ペイン操作
+
+# ウィンドウを垂直分割する（キーバインド）
+# Ctrl+b %
+
+# ウィンドウを水平分割する（キーバインド）
+# Ctrl+b "
+
+# ペイン間を移動する
+# Ctrl+b 矢印キー
+
+# ペイン間を順番に移動する
+# Ctrl+b o
+
+# ペインを閉じる
+# Ctrl+b x
+
+# ペインを最大化・元に戻す
+# Ctrl+b z
+
+# ペインのサイズを変更する
+# Ctrl+b Ctrl+矢印キー（小刻み）
+# Ctrl+b Alt+矢印キー（大きく）
+
+# ペインレイアウトを変更する
+# Ctrl+b スペース
+
+# ペインを別のウィンドウに移動する
+# Ctrl+b !
+
+# ペイン番号を表示する
+# Ctrl+b q
+
+# ペイン番号で移動する
+# Ctrl+b q 0-9
+
+
+% tmux, コピーモード
+
+# コピーモードに入る
+# Ctrl+b [
+
+# コピーモードを抜ける
+# q または Esc
+
+# コピーモードで検索する
+# / （前方検索）
+# ? （後方検索）
+
+# コピーモードで選択開始する（vi mode）
+# スペース
+
+# コピーモードでコピーする（vi mode）
+# Enter
+
+# コピーしたテキストをペーストする
+# Ctrl+b ]
+
+# スクロールアップする
+# Ctrl+b PgUp
+
+
+% tmux, 設定・カスタマイズ
+
+# 設定をリロードする
+tmux source-file ~/.tmux.conf
+
+# 設定ファイルの例
+# .tmux.confに以下を追加する：
+# set -g prefix C-a                    # プレフィックスをCtrl+aに変更
+# set -g mouse on                      # マウスを有効にする
+# set -g history-limit 10000           # スクロールバッファを増やす
+# set -g base-index 1                  # ウィンドウ番号を1始まりにする
+# set-window-option -g mode-keys vi    # viキーバインドを有効にする
+
+# マウスを有効にする（コマンド）
+tmux set -g mouse on
+
+# ステータスバーを更新する
+tmux refresh-client -S
+
+
+% tmux, スクリプト・自動化
+
+# セッション内でコマンドを実行する
+tmux send-keys -t <session_name> "<command>" Enter
+
+# 特定のウィンドウでコマンドを実行する
+tmux send-keys -t <session_name>:<window_number> "<command>" Enter
+
+# セッションが存在するか確認する
+tmux has-session -t <session_name> 2>/dev/null && echo "exists" || echo "not found"
+
+# セッションが存在しない場合のみ作成する
+tmux new-session -d -s <session_name> 2>/dev/null || true
+
+# 複数ペインをセットアップするスクリプト例
+# tmux new-session -d -s dev
+# tmux split-window -h -t dev
+# tmux split-window -v -t dev:0.1
+# tmux send-keys -t dev:0.0 "npm run dev" Enter
+
+
+% tmux, 情報・デバッグ
+
+# 現在のセッション情報を表示する
+tmux display-message -p "Session: #S, Window: #W, Pane: #P"
+
+# すべてのオプションを表示する
+tmux show-options -g
+
+# キーバインド一覧を表示する
+# Ctrl+b ?
+
+# tmuxサーバーの情報を表示する
+tmux info
+
+$ session_name: tmux list-sessions -F '#S' 2>/dev/null || echo "main"
+$ window_number: tmux list-windows -F '#I' 2>/dev/null || echo "1"

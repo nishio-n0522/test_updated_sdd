@@ -1,0 +1,165 @@
+% supabase, 基本
+
+# Supabase CLIのバージョンを確認する
+supabase --version
+
+# ヘルプを表示する
+supabase --help
+
+# 特定のコマンドのヘルプを表示する
+supabase <command> --help
+
+# Supabaseにログインする
+supabase login
+
+# ログアウトする
+supabase logout
+
+# 現在のログイン状態を確認する
+supabase status
+
+
+% supabase, ローカル開発環境
+
+# ローカル環境を起動する
+supabase start
+
+# ローカル環境を停止する
+supabase stop
+
+# ローカル環境を停止してボリュームも削除する
+supabase stop --backup=false
+
+# ローカル環境のステータスを確認する
+supabase status
+
+# ローカル環境を再起動する
+supabase stop && supabase start
+
+# Supabase Studioをブラウザで開く（デフォルトでlocalhost:54323）
+supabase status | grep Studio
+
+
+% supabase, データベース
+
+# データベースをリセットする（マイグレーションを再適用）
+supabase db reset
+
+# データベースの差分を確認する（新しいマイグレーションを生成）
+supabase db diff
+
+# 差分からマイグレーションファイルを生成する
+supabase db diff -f <migration_name>
+
+# マイグレーションを適用する
+supabase db push
+
+# ローカルDBのマイグレーション一覧を確認する
+supabase migration list
+
+# マイグレーションファイルを新規作成する
+supabase migration new <migration_name>
+
+# 特定のマイグレーションを適用する
+supabase migration up
+
+# SQLファイルを実行する
+supabase db execute --file <sql_file>
+
+# データベースに直接SQLを実行する
+supabase db execute --sql "<sql_query>"
+
+# データベースのスキーマを確認する
+supabase db dump
+
+# データをダンプする
+supabase db dump --data-only
+
+
+% supabase, TypeScript型生成
+
+# ローカルDBからTypeScript型を生成する
+supabase gen types typescript --local
+
+# TypeScript型をファイルに出力する
+supabase gen types typescript --local > src/lib/supabase/types.ts
+
+# リモートプロジェクトからTypeScript型を生成する
+supabase gen types typescript --project-id <project_id>
+
+# スキーマを指定してTypeScript型を生成する
+supabase gen types typescript --local --schema public
+
+
+% supabase, プロジェクト管理
+
+# プロジェクトを初期化する
+supabase init
+
+# リモートプロジェクトと紐づける
+supabase link --project-ref <project_id>
+
+# リンク済みプロジェクトを確認する
+supabase projects list
+
+# プロジェクトを作成する
+supabase projects create <project_name>
+
+
+% supabase, Edge Functions
+
+# Edge Functionを新規作成する
+supabase functions new <function_name>
+
+# Edge Functionをローカルで起動する
+supabase functions serve
+
+# 特定のFunctionをローカルで起動する
+supabase functions serve <function_name>
+
+# Edge Functionをデプロイする
+supabase functions deploy <function_name>
+
+# すべてのEdge Functionをデプロイする
+supabase functions deploy
+
+# Edge Functionの一覧を確認する
+supabase functions list
+
+# Edge Functionを削除する
+supabase functions delete <function_name>
+
+# Edge Functionのログを確認する
+supabase functions logs <function_name>
+
+
+% supabase, シークレット・環境変数
+
+# シークレットを設定する
+supabase secrets set <key>=<value>
+
+# シークレット一覧を確認する
+supabase secrets list
+
+# シークレットを削除する
+supabase secrets unset <key>
+
+# .envファイルからシークレットを一括設定する
+supabase secrets set --env-file .env
+
+
+% supabase, ログ・デバッグ
+
+# ローカル環境のログを確認する
+supabase logs
+
+# 特定サービスのログを確認する（api, auth, realtime, storage, postgres）
+supabase logs --service <service>
+
+# リアルタイムでログを確認する
+supabase logs --follow
+
+$ migration_name: echo "YYYYMMDD_description"
+$ project_id: supabase projects list 2>/dev/null | tail -n +2 | awk '{print $1}' || echo ""
+$ function_name: ls supabase/functions/ 2>/dev/null || echo ""
+$ service: echo -e "api\nauth\nrealtime\nstorage\npostgres"

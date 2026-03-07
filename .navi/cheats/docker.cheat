@@ -1,0 +1,262 @@
+% docker, 基本
+
+# Dockerのバージョンを確認する
+docker version
+
+# Dockerのシステム情報を表示する
+docker info
+
+# Dockerのディスク使用量を確認する
+docker system df
+
+# 未使用のコンテナ・イメージ・ネットワーク・キャッシュをすべて削除する
+docker system prune
+
+# 未使用のボリュームも含めてすべて削除する
+docker system prune --all --volumes
+
+# コマンドのヘルプを表示する
+docker <command> --help
+
+$ command: echo -e "build\nrun\nexec\npull\npush\nimages\nps\nlogs\nstop\nrm\nrmi\nnetwork\nvolume\ncompose" --- --column 1
+
+
+% docker, コンテナ操作
+
+# イメージからコンテナを作成して起動する
+docker run <image>
+
+# コンテナをバックグラウンドで起動する
+docker run -d <image>
+
+# コンテナに名前を付けて起動する
+docker run -d --name <name> <image>
+
+# ポートを指定してコンテナを起動する（ホスト:コンテナ）
+docker run -d -p <host_port>:<container_port> <image>
+
+# 環境変数を渡してコンテナを起動する
+docker run -d -e <key>=<value> <image>
+
+# ボリュームをマウントしてコンテナを起動する
+docker run -d -v <host_path>:<container_path> <image>
+
+# コンテナを起動して対話的にシェルに入る（終了時に自動削除）
+docker run --rm -it <image> bash
+
+# 停止中のコンテナを起動する
+docker start <container_id>
+
+# コンテナを再起動する
+docker restart <container_id>
+
+# コンテナを一時停止する
+docker pause <container_id>
+
+# 一時停止したコンテナを再開する
+docker unpause <container_id>
+
+# 実行中のコンテナ一覧を表示する
+docker ps
+
+# すべてのコンテナを表示する（停止中も含む）
+docker ps -a
+
+# コンテナの詳細情報を表示する
+docker inspect <container_id>
+
+# コンテナのリソース使用状況をリアルタイムで表示する
+docker stats
+
+# 特定のコンテナのリソース使用状況を表示する
+docker stats <container_id>
+
+# コンテナの中で実行中のプロセスを表示する
+docker top <container_id>
+
+# コンテナ内でbashを起動して接続する
+docker exec -it <container_id> bash
+
+# コンテナとホスト間でファイルをコピーする（ホスト→コンテナ）
+docker cp <host_path> <container_id>:<container_path>
+
+# コンテナとホスト間でファイルをコピーする（コンテナ→ホスト）
+docker cp <container_id>:<container_path> <host_path>
+
+# コンテナの変更差分を表示する
+docker diff <container_id>
+
+# 実行中のコンテナをSIGTERMで停止する
+docker stop <container_id>
+
+# 実行中のコンテナをSIGKILLで強制停止する
+docker kill <container_id>
+
+# コンテナのログの末尾を表示する
+docker logs --tail 100 <container_id> | less
+
+# コンテナのログの末尾を表示し、リアルタイムで追跡する
+docker logs --tail 100 <container_id> -f
+
+# コンテナを削除する
+docker rm <container_id>
+
+# すべてのコンテナ（実行中・停止中）を強制削除する
+docker rm -f $(docker ps -aq)
+
+# 停止中のコンテナをすべて削除する
+docker container prune
+
+$ container_id: docker ps -a --- --headers 1 --column 1
+
+
+% docker, イメージ操作
+
+# ローカルに保存されているイメージ一覧を表示する
+docker images
+
+# イメージの詳細情報を表示する
+docker inspect <image_id>
+
+# イメージの作成履歴を表示する
+docker history <image_id>
+
+# レジストリからイメージを取得する
+docker pull <image>:<version>
+
+# イメージにタグを付ける
+docker tag <image_id> <repository>:<tag>
+
+# イメージをレジストリにプッシュする
+docker push <repository>:<tag>
+
+# イメージを削除する
+docker image rm <image_id>
+
+# ローカルのイメージを削除する
+docker rmi <image_id>
+
+# 不要な（dangling）イメージを削除する
+docker rmi $(docker images --filter "dangling=true" -q --no-trunc)
+
+# 不要な（dangling）イメージを強制削除する
+docker rmi $(docker images --filter "dangling=true" -q --no-trunc) -f
+
+# 未使用のイメージをすべて削除する
+docker image prune -a
+
+# イメージをtarファイルに保存する
+docker save -o <filename>.tar <image_id>
+
+# tarファイルからイメージを読み込む
+docker load -i <filename>.tar
+
+# コンテナの現在の状態からイメージを作成する
+docker commit <container_id> <repository>:<tag>
+
+$ image_id: docker images --- --headers 1 --column 3
+$ container_id: docker ps -a --- --headers 1 --column 1
+
+
+% docker, ボリューム
+
+# ボリュームを作成する
+docker volume create <volume_name>
+
+# ボリューム一覧を表示する
+docker volume ls
+
+# ボリュームの詳細情報を表示する
+docker volume inspect <volume_name>
+
+# ボリュームを削除する
+docker volume rm <volume_name>
+
+# 未使用のボリュームをすべて削除する
+docker volume prune
+
+$ volume_name: docker volume ls --format '{{.Name}}'
+
+
+% docker, ネットワーク
+
+# ネットワーク一覧を表示する
+docker network ls
+
+# ネットワークの詳細情報を表示する
+docker network inspect <network_name>
+
+# 新しいネットワークを作成する
+docker network create <network_name>
+
+# ネットワークを削除する
+docker network rm <network_name>
+
+# コンテナをネットワークに接続する
+docker network connect <network_name> <container_id>
+
+# コンテナをネットワークから切断する
+docker network disconnect <network_name> <container_id>
+
+# 未使用のネットワークをすべて削除する
+docker network prune
+
+$ network_name: docker network ls --format '{{.Name}}'
+$ container_id: docker ps --- --headers 1 --column 1
+
+
+% docker, Dockerfile
+
+# カレントディレクトリのDockerfileからイメージをビルドしてタグを付ける
+docker build -t <image>:<version> .
+
+# キャッシュを使わずにビルドする
+docker build --no-cache -t <image>:<version> .
+
+# ビルド引数を渡してビルドする
+docker build --build-arg <key>=<value> -t <image>:<version> .
+
+# 別のDockerfileを指定してビルドする
+docker build -f <dockerfile_path> -t <image>:<version> .
+
+# マルチプラットフォーム向けにビルドする
+docker buildx build --platform linux/amd64,linux/arm64 -t <image>:<version> .
+
+
+% docker, レジストリ
+
+# Docker Hubにログインする
+docker login
+
+# プライベートレジストリにログインする
+docker login <registry_url>
+
+# レジストリからログアウトする
+docker logout
+
+# Docker Hubでイメージを検索する
+docker search <keyword>
+
+
+% docker-compose
+
+# すべてのサービスをビルド・作成・起動して接続する
+docker-compose up
+
+# すべてのサービスをビルド・作成・起動する（バックグラウンド）
+docker-compose up -d
+
+# 特定のサービスをビルド・作成・起動する（フォアグラウンド）
+docker-compose up <service_name>
+
+# 特定のサービスをビルド・作成・起動する（バックグラウンド）
+docker-compose up -d <service_name>
+
+# サービスのログの末尾を表示する
+docker-compose logs --tail 100 <service_name> | less
+
+# サービスのログの末尾を表示し、リアルタイムで追跡する
+docker-compose logs -f --tail 100 <service_name>
+
+# コンテナを停止し、upで作成されたコンテナ・ネットワークを削除する
+docker-compose down

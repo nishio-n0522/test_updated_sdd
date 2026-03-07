@@ -1,0 +1,117 @@
+% typescript, 基本
+
+# TypeScriptのバージョンを確認する
+tsc --version
+
+# ヘルプを表示する
+tsc --help
+
+# TypeScriptファイルをコンパイルする
+tsc <file>
+
+# tsconfig.jsonを使ってコンパイルする
+tsc
+
+# tsconfig.jsonを指定してコンパイルする
+tsc --project <tsconfig_path>
+
+# 特定のディレクトリに出力する
+tsc --outDir <output_dir>
+
+
+% typescript, 型チェック
+
+# 型チェックのみ実行する（出力ファイルを生成しない）
+tsc --noEmit
+
+# 型チェックをwatchモードで実行する
+tsc --noEmit --watch
+
+# tsconfig.jsonで型チェックのみ実行する
+tsc --noEmit -p tsconfig.json
+
+# エラーの詳細情報を表示する
+tsc --noEmit --pretty
+
+# 診断情報を表示する
+tsc --noEmit --diagnostics
+
+
+% typescript, tsconfig.json
+
+# tsconfig.jsonを生成する
+tsc --init
+
+# 現在のtsconfig.jsonの設定を確認する（全設定を表示）
+tsc --showConfig
+
+# 厳格モードで確認する
+tsc --strict --noEmit
+
+# 解決されたモジュールのパスを表示する
+tsc --traceResolution
+
+# 使われているファイルを表示する
+tsc --listFiles
+
+# 型チェックをスキップしてコンパイルする（デバッグ用）
+tsc --skipLibCheck
+
+
+% typescript, ウォッチモード
+
+# ファイル変更を監視してコンパイルする
+tsc --watch
+
+# ウォッチモードでエラーのみ表示する
+tsc --watch --pretty
+
+# 増分コンパイルを有効にする
+tsc --incremental
+
+
+% typescript, よく使うコンパイラオプション
+
+# ES2020としてコンパイルする
+tsc --target ES2020
+
+# CommonJSモジュール形式で出力する
+tsc --module commonjs
+
+# ソースマップを生成する
+tsc --sourceMap
+
+# 宣言ファイル（.d.ts）を生成する
+tsc --declaration
+
+# JSXをreactとして変換する
+tsc --jsx react
+
+# パスエイリアスの設定（tsconfig.jsonで設定する例）
+# {
+#   "compilerOptions": {
+#     "paths": {
+#       "@/*": ["./src/*"]
+#     }
+#   }
+# }
+
+
+% typescript, デバッグ・調査
+
+# 特定ファイルの型情報を確認する（tsserverを使用）
+tsc --noEmit --pretty 2>&1 | head -50
+
+# コンパイル時間を計測する
+tsc --noEmit --diagnostics 2>&1 | grep "Total time"
+
+# 型チェックエラーを一覧表示する
+tsc --noEmit 2>&1
+
+# 特定のエラーコードを無視する（tsconfig.jsonに追加）
+# "ignoreDeprecations": "5.0"
+
+# 型チェック結果をJSONで出力する
+tsc --noEmit --listFilesOnly
+
+$ tsconfig_path: find . -name "tsconfig*.json" -not -path "*/node_modules/*" 2>/dev/null

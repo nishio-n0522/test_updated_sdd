@@ -1,0 +1,481 @@
+% bash, ファイル操作
+
+# ファイル一覧を表示する
+ls
+
+# 隠しファイルも含めて詳細表示する
+ls -la
+
+# ファイルサイズを人間が読みやすい形式で表示する
+ls -lh
+
+# ファイルを更新日時順に表示する（新しい順）
+ls -lt
+
+# ファイルをサイズ順に表示する（大きい順）
+ls -lS
+
+# ツリー形式でディレクトリ構造を表示する
+tree -L <depth>
+
+# ファイルをコピーする
+cp <source> <destination>
+
+# ディレクトリごとコピーする
+cp -r <source_dir> <destination_dir>
+
+# ファイルを移動・リネームする
+mv <source> <destination>
+
+# ファイルを削除する
+rm <file>
+
+# ディレクトリごと削除する
+rm -rf <directory>
+
+# 空のファイルを作成する（または更新日時を更新する）
+touch <filename>
+
+# ディレクトリを作成する（中間ディレクトリも含めて）
+mkdir -p <directory>
+
+# 空のディレクトリを削除する
+rmdir <directory>
+
+# ファイルの種類を判別する
+file <filename>
+
+# シンボリックリンクを作成する
+ln -s <target> <link_name>
+
+# シンボリックリンクの実体パスを表示する
+readlink -f <link_name>
+
+
+% bash, ファイル内容
+
+# ファイルの内容を表示する
+cat <file>
+
+# ファイルの内容をページ送りで表示する
+less <file>
+
+# ファイルの先頭を表示する
+head -n <lines> <file>
+
+# ファイルの末尾を表示する
+tail -n <lines> <file>
+
+# ファイルの末尾をリアルタイムで追跡する
+tail -f <file>
+
+# ファイルの行数・単語数・バイト数を表示する
+wc <file>
+
+# ファイルの行数だけ表示する
+wc -l <file>
+
+# 2つのファイルの差分を表示する
+diff <file1> <file2>
+
+# 2つのファイルの差分を色付きで表示する
+diff --color <file1> <file2>
+
+# ファイルを並べて差分を表示する
+diff -y <file1> <file2>
+
+# ソート済みの2ファイルをマージする
+sort -m <file1> <file2>
+
+
+% bash, 検索
+
+# ファイル名で検索する
+find <directory> -name "<pattern>"
+
+# ファイル名で検索する（大文字小文字を無視）
+find <directory> -iname "<pattern>"
+
+# 指定日数以内に更新されたファイルを検索する
+find <directory> -mtime -<days>
+
+# 指定サイズ以上のファイルを検索する
+find <directory> -size +<size>
+
+# 空のファイル・ディレクトリを検索する
+find <directory> -empty
+
+# 検索結果に対してコマンドを実行する
+find <directory> -name "<pattern>" -exec <command> {} \;
+
+# ファイル内の文字列を検索する
+grep "<pattern>" <file>
+
+# ファイル内の文字列を再帰的に検索する
+grep -r "<pattern>" <directory>
+
+# 大文字小文字を無視して検索する
+grep -i "<pattern>" <file>
+
+# マッチした行番号も表示する
+grep -n "<pattern>" <file>
+
+# マッチしない行を表示する
+grep -v "<pattern>" <file>
+
+# マッチするファイル名だけを表示する
+grep -rl "<pattern>" <directory>
+
+# 正規表現で検索する（拡張正規表現）
+grep -E "<regex>" <file>
+
+# コマンドの場所を調べる
+which <command>
+
+# コマンドの場所をすべて調べる
+whereis <command>
+
+
+% bash, テキスト加工
+
+# 文字列を置換する（最初の1つ）
+sed 's/<old>/<new>/' <file>
+
+# 文字列をすべて置換する
+sed 's/<old>/<new>/g' <file>
+
+# ファイルを直接書き換えて置換する
+sed -i 's/<old>/<new>/g' <file>
+
+# 特定の行を削除する
+sed '<line_number>d' <file>
+
+# 特定の列を抽出する（区切り文字を指定）
+cut -d '<delimiter>' -f <field_number> <file>
+
+# テキストをソートする
+sort <file>
+
+# テキストを逆順にソートする
+sort -r <file>
+
+# 数値としてソートする
+sort -n <file>
+
+# 重複行を削除する
+sort <file> | uniq
+
+# 重複行の出現回数を数える
+sort <file> | uniq -c | sort -rn
+
+# 特定の列だけを抽出する（awkを使用）
+awk '{print $<column_number>}' <file>
+
+# 条件に合う行だけを抽出する
+awk '$<column_number> > <value>' <file>
+
+# 区切り文字を指定して列を抽出する
+awk -F'<delimiter>' '{print $<column_number>}' <file>
+
+# 文字列を結合して出力する
+echo "<text1>" | paste -d '<delimiter>' - <file2>
+
+# 文字を置き換える（trコマンド）
+echo "<text>" | tr '<from>' '<to>'
+
+# 小文字を大文字に変換する
+echo "<text>" | tr 'a-z' 'A-Z'
+
+
+% bash, リダイレクト・パイプ
+
+# 出力をファイルに保存する（上書き）
+<command> > <file>
+
+# 出力をファイルに追記する
+<command> >> <file>
+
+# 標準エラーもファイルに保存する
+<command> &> <file>
+
+# 標準エラーだけファイルに保存する
+<command> 2> <file>
+
+# 出力を画面に表示しつつファイルにも保存する
+<command> | tee <file>
+
+# 出力を画面に表示しつつファイルに追記する
+<command> | tee -a <file>
+
+# コマンドの出力を別のコマンドの入力にする
+<command1> | <command2>
+
+# 出力を捨てる（/dev/null）
+<command> > /dev/null 2>&1
+
+# ヒアドキュメントで複数行を入力する
+cat << EOF > <file>
+
+# クリップボードにコピーする（xclip使用）
+<command> | xclip -selection clipboard
+
+
+% bash, プロセス管理
+
+# 実行中のプロセス一覧を表示する
+ps aux
+
+# プロセス名で検索する
+ps aux | grep <process_name>
+
+# リアルタイムでプロセスを監視する
+top
+
+# htopで見やすく監視する
+htop
+
+# プロセスを終了する（SIGTERM）
+kill <pid>
+
+# プロセスを強制終了する（SIGKILL）
+kill -9 <pid>
+
+# プロセス名で終了する
+pkill <process_name>
+
+# コマンドをバックグラウンドで実行する
+<command> &
+
+# バックグラウンドジョブ一覧を表示する
+jobs
+
+# バックグラウンドジョブをフォアグラウンドに戻す
+fg %<job_number>
+
+# フォアグラウンドのプロセスをバックグラウンドに移す（Ctrl+Zの後）
+bg %<job_number>
+
+# ログアウトしてもプロセスを継続させる
+nohup <command> &
+
+# 指定ポートを使用しているプロセスを調べる
+lsof -i :<port>
+
+# 指定ポートを使用しているプロセスを調べる（ss版）
+ss -tlnp | grep <port>
+
+
+% bash, ディスク・システム
+
+# ディスク使用量を表示する
+df -h
+
+# ディレクトリのサイズを表示する
+du -sh <directory>
+
+# ディレクトリ内の各項目のサイズを表示する
+du -sh <directory>/*
+
+# 大きいファイルを上位から表示する
+du -ah <directory> | sort -rh | head -20
+
+# メモリ使用量を表示する
+free -h
+
+# システムの稼働時間と負荷を表示する
+uptime
+
+# OS情報を表示する
+uname -a
+
+# カーネルバージョンを表示する
+uname -r
+
+# ホスト名を表示する
+hostname
+
+# 環境変数を一覧表示する
+env
+
+# 特定の環境変数を表示する
+echo $<variable_name>
+
+# 環境変数を設定する（現在のセッション）
+export <key>=<value>
+
+
+% bash, 権限・ユーザー
+
+# ファイルの権限を変更する
+chmod <permissions> <file>
+
+# ファイルの権限を再帰的に変更する
+chmod -R <permissions> <directory>
+
+# ファイルを実行可能にする
+chmod +x <file>
+
+# ファイルの所有者を変更する
+chown <user>:<group> <file>
+
+# ファイルの所有者を再帰的に変更する
+chown -R <user>:<group> <directory>
+
+# 現在のユーザー名を表示する
+whoami
+
+# 現在のユーザーのグループを表示する
+groups
+
+# ユーザーのID情報を表示する
+id
+
+# 別のユーザーに切り替える
+su - <username>
+
+# root権限でコマンドを実行する
+sudo <command>
+
+
+% bash, ネットワーク
+
+# IPアドレスを確認する
+ip addr show
+
+# 外部との疎通を確認する
+ping -c 4 <host>
+
+# DNSを問い合わせる
+nslookup <domain>
+
+# DNSを詳細に問い合わせる
+dig <domain>
+
+# ポートの開放状況を確認する
+ss -tlnp
+
+# URLからファイルをダウンロードする
+curl -O <url>
+
+# URLの内容を表示する
+curl -s <url>
+
+# HTTPヘッダーを確認する
+curl -I <url>
+
+# ファイルをダウンロードする（wget）
+wget <url>
+
+# ルーティングテーブルを表示する
+ip route show
+
+# 外部IPアドレスを確認する
+curl -s ifconfig.me
+
+
+% bash, アーカイブ・圧縮
+
+# tar.gzを作成する
+tar czf <archive>.tar.gz <directory>
+
+# tar.gzを展開する
+tar xzf <archive>.tar.gz
+
+# tar.gzの中身を確認する（展開せず）
+tar tzf <archive>.tar.gz
+
+# tar.bz2を作成する
+tar cjf <archive>.tar.bz2 <directory>
+
+# tar.bz2を展開する
+tar xjf <archive>.tar.bz2
+
+# zipを作成する
+zip -r <archive>.zip <directory>
+
+# zipを展開する
+unzip <archive>.zip
+
+# zipの中身を確認する（展開せず）
+unzip -l <archive>.zip
+
+# gzipで圧縮する
+gzip <file>
+
+# gzipを展開する
+gunzip <file>.gz
+
+
+% bash, 履歴・ショートカット
+
+# コマンド履歴を表示する
+history
+
+# 履歴から検索する
+history | grep <keyword>
+
+# 直前のコマンドを再実行する
+!!
+
+# 直前のコマンドの最後の引数を再利用する
+!$
+
+# N番目の履歴コマンドを実行する
+!<number>
+
+# コマンド履歴をクリアする
+history -c
+
+# エイリアスを設定する（現在のセッション）
+alias <name>='<command>'
+
+# エイリアス一覧を表示する
+alias
+
+# エイリアスを削除する
+unalias <name>
+
+# 現在のシェルを確認する
+echo $SHELL
+
+# .bashrcを再読み込みする
+source ~/.bashrc
+
+
+% bash, 日時・その他
+
+# 現在の日時を表示する
+date
+
+# 指定フォーマットで日時を表示する
+date '+%Y-%m-%d %H:%M:%S'
+
+# UNIXタイムスタンプを表示する
+date +%s
+
+# UNIXタイムスタンプを日時に変換する
+date -d @<timestamp>
+
+# カレンダーを表示する
+cal
+
+# コマンドの実行時間を計測する
+time <command>
+
+# 指定秒数待機する
+sleep <seconds>
+
+# コマンドを定期実行して変化を監視する
+watch -n <seconds> '<command>'
+
+# 前回のコマンドの終了コードを確認する
+echo $?
+
+# 現在のディレクトリを表示する
+pwd
+
+# 直前のディレクトリに戻る
+cd -
+
+# ホームディレクトリに移動する
+cd ~

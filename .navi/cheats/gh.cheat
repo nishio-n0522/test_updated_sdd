@@ -1,0 +1,422 @@
+% gh, 認証
+
+# GitHubにログインする
+gh auth login
+
+# GitHub Enterprise Serverにログインする
+gh auth login --hostname <hostname>
+
+# 認証状態を確認する
+gh auth status
+
+# ログアウトする
+gh auth logout
+
+# 認証トークンを表示する
+gh auth token
+
+# トークンを更新する（スコープを追加）
+gh auth refresh --scopes <scopes>
+
+
+% gh, リポジトリ
+
+# リポジトリを作成する（対話式）
+gh repo create
+
+# パブリックリポジトリを作成する
+gh repo create <name> --public
+
+# プライベートリポジトリを作成する
+gh repo create <name> --private
+
+# 説明を付けてリポジトリを作成する
+gh repo create <name> --public --description "<description>"
+
+# リポジトリをクローンする
+gh repo clone <owner>/<repo>
+
+# リポジトリをフォークする
+gh repo fork <owner>/<repo>
+
+# フォークしてクローンする
+gh repo fork <owner>/<repo> --clone
+
+# リポジトリの情報を表示する
+gh repo view
+
+# ブラウザでリポジトリを開く
+gh repo view --web
+
+# リポジトリを一覧表示する
+gh repo list
+
+# 自分のリポジトリを一覧表示する（上限指定）
+gh repo list --limit <count>
+
+# リポジトリをアーカイブする
+gh repo archive <owner>/<repo>
+
+# リポジトリを削除する
+gh repo delete <owner>/<repo>
+
+# リポジトリをブラウザで開く
+gh browse
+
+# リポジトリの設定を編集する
+gh repo edit --description "<description>"
+
+# デフォルトブランチを変更する
+gh repo edit --default-branch <branch_name>
+
+$ owner: gh api user --jq '.login'
+
+
+% gh, プルリクエスト
+
+# プルリクエストを作成する（対話式）
+gh pr create
+
+# タイトルと本文を指定してプルリクエストを作成する
+gh pr create --title "<title>" --body "<body>"
+
+# ドラフトのプルリクエストを作成する
+gh pr create --draft --title "<title>" --body "<body>"
+
+# 特定のブランチへのプルリクエストを作成する
+gh pr create --base <base_branch> --title "<title>" --body "<body>"
+
+# レビュアーを指定してプルリクエストを作成する
+gh pr create --reviewer <username> --title "<title>" --body "<body>"
+
+# ラベルを付けてプルリクエストを作成する
+gh pr create --label "<label>" --title "<title>" --body "<body>"
+
+# プルリクエスト一覧を表示する
+gh pr list
+
+# オープン中のプルリクエストを一覧表示する
+gh pr list --state open
+
+# クローズ済みのプルリクエストを一覧表示する
+gh pr list --state closed
+
+# 自分が作成したプルリクエストを一覧表示する
+gh pr list --author "@me"
+
+# 自分がレビュアーのプルリクエストを一覧表示する
+gh pr list --review-requested "@me"
+
+# プルリクエストの詳細を表示する
+gh pr view <pr_number>
+
+# ブラウザでプルリクエストを開く
+gh pr view <pr_number> --web
+
+# 現在のブランチのプルリクエストを表示する
+gh pr view
+
+# プルリクエストをチェックアウトする
+gh pr checkout <pr_number>
+
+# プルリクエストをマージする
+gh pr merge <pr_number>
+
+# スカッシュマージする
+gh pr merge <pr_number> --squash
+
+# リベースマージする
+gh pr merge <pr_number> --rebase
+
+# プルリクエストをクローズする
+gh pr close <pr_number>
+
+# プルリクエストを再オープンする
+gh pr reopen <pr_number>
+
+# ドラフトから通常のプルリクエストに変更する
+gh pr ready <pr_number>
+
+# レビューを承認する
+gh pr review <pr_number> --approve
+
+# レビューで変更を要求する
+gh pr review <pr_number> --request-changes --body "<comment>"
+
+# プルリクエストにコメントする
+gh pr comment <pr_number> --body "<comment>"
+
+# CIのチェック状態を確認する
+gh pr checks <pr_number>
+
+# CIのチェックが完了するまで待機する
+gh pr checks <pr_number> --watch
+
+# プルリクエストに差分を表示する
+gh pr diff <pr_number>
+
+$ pr_number: gh pr list --json number,title --jq '.[] | "\(.number)\t\(.title)"' --- --column 1
+
+
+% gh, イシュー
+
+# イシューを作成する（対話式）
+gh issue create
+
+# タイトルと本文を指定してイシューを作成する
+gh issue create --title "<title>" --body "<body>"
+
+# ラベルを付けてイシューを作成する
+gh issue create --label "<label>" --title "<title>" --body "<body>"
+
+# 担当者を指定してイシューを作成する
+gh issue create --assignee <username> --title "<title>" --body "<body>"
+
+# 自分に割り当ててイシューを作成する
+gh issue create --assignee "@me" --title "<title>" --body "<body>"
+
+# イシュー一覧を表示する
+gh issue list
+
+# クローズ済みのイシューを一覧表示する
+gh issue list --state closed
+
+# 自分に割り当てられたイシューを一覧表示する
+gh issue list --assignee "@me"
+
+# ラベルでフィルタリングしてイシューを一覧表示する
+gh issue list --label "<label>"
+
+# イシューの詳細を表示する
+gh issue view <issue_number>
+
+# ブラウザでイシューを開く
+gh issue view <issue_number> --web
+
+# イシューをクローズする
+gh issue close <issue_number>
+
+# イシューを再オープンする
+gh issue reopen <issue_number>
+
+# イシューにコメントする
+gh issue comment <issue_number> --body "<comment>"
+
+# イシューを編集する
+gh issue edit <issue_number> --title "<new_title>"
+
+# イシューにラベルを追加する
+gh issue edit <issue_number> --add-label "<label>"
+
+# イシューのラベルを削除する
+gh issue edit <issue_number> --remove-label "<label>"
+
+# イシューを担当者に割り当てる
+gh issue edit <issue_number> --add-assignee <username>
+
+$ issue_number: gh issue list --json number,title --jq '.[] | "\(.number)\t\(.title)"' --- --column 1
+
+
+% gh, リリース
+
+# リリースを作成する（対話式）
+gh release create
+
+# タグを指定してリリースを作成する
+gh release create <tag>
+
+# タイトルとノートを付けてリリースを作成する
+gh release create <tag> --title "<title>" --notes "<notes>"
+
+# プレリリースとして作成する
+gh release create <tag> --prerelease --title "<title>"
+
+# ドラフトリリースを作成する
+gh release create <tag> --draft --title "<title>"
+
+# 変更履歴を自動生成してリリースを作成する
+gh release create <tag> --generate-notes
+
+# ファイルを添付してリリースを作成する
+gh release create <tag> <file> --title "<title>"
+
+# リリース一覧を表示する
+gh release list
+
+# リリースの詳細を表示する
+gh release view <tag>
+
+# リリースのアセットをダウンロードする
+gh release download <tag>
+
+# 特定のアセットをダウンロードする
+gh release download <tag> --pattern "<pattern>"
+
+# リリースを削除する
+gh release delete <tag>
+
+$ tag: gh release list --json tagName --jq '.[].tagName'
+
+
+% gh, GitHub Actions
+
+# ワークフロー一覧を表示する
+gh workflow list
+
+# ワークフローを手動実行する
+gh workflow run <workflow_name>
+
+# ブランチを指定してワークフローを実行する
+gh workflow run <workflow_name> --ref <branch_name>
+
+# 入力値を指定してワークフローを実行する
+gh workflow run <workflow_name> --field <key>=<value>
+
+# ワークフローを有効にする
+gh workflow enable <workflow_name>
+
+# ワークフローを無効にする
+gh workflow disable <workflow_name>
+
+# 実行中のワークフローの一覧を表示する
+gh run list
+
+# 特定のワークフローの実行一覧を表示する
+gh run list --workflow <workflow_name>
+
+# 実行の詳細を表示する
+gh run view <run_id>
+
+# 実行のログを表示する
+gh run view <run_id> --log
+
+# 実行が完了するまで待機する
+gh run watch <run_id>
+
+# 失敗した実行を再実行する
+gh run rerun <run_id> --failed
+
+# 実行をキャンセルする
+gh run cancel <run_id>
+
+$ workflow_name: gh workflow list --json name --jq '.[].name'
+$ run_id: gh run list --json databaseId,name,status --jq '.[] | "\(.databaseId)\t\(.name)\t\(.status)"' --- --column 1
+
+
+% gh, Gist
+
+# Gistを作成する（標準入力から）
+cat <file> | gh gist create
+
+# ファイルからGistを作成する
+gh gist create <file>
+
+# 説明を付けてGistを作成する
+gh gist create <file> --desc "<description>"
+
+# パブリックGistを作成する
+gh gist create <file> --public
+
+# 複数ファイルのGistを作成する
+gh gist create <file1> <file2>
+
+# Gist一覧を表示する
+gh gist list
+
+# Gistの内容を表示する
+gh gist view <gist_id>
+
+# GistをブラウザでGistを開く
+gh gist view <gist_id> --web
+
+# Gistを編集する
+gh gist edit <gist_id>
+
+# Gistを削除する
+gh gist delete <gist_id>
+
+# GistをCloneする
+gh gist clone <gist_id>
+
+$ gist_id: gh gist list --json id,description --jq '.[] | "\(.id)\t\(.description)"' --- --column 1
+
+
+% gh, 検索
+
+# リポジトリを検索する
+gh search repos <keyword>
+
+# イシューを検索する
+gh search issues <keyword>
+
+# プルリクエストを検索する
+gh search prs <keyword>
+
+# コードを検索する
+gh search code <keyword>
+
+# コミットを検索する
+gh search commits <keyword>
+
+
+% gh, API・その他
+
+# GitHub APIを呼び出す
+gh api <endpoint>
+
+# ユーザー情報を取得する
+gh api user
+
+# 特定のユーザー情報を取得する
+gh api users/<username>
+
+# JQでAPIレスポンスを絞り込む
+gh api <endpoint> --jq '<jq_filter>'
+
+# ページネーションで全件取得する
+gh api <endpoint> --paginate
+
+# GraphQL APIを呼び出す
+gh api graphql -f query='<query>'
+
+# ghのバージョンを確認する
+gh version
+
+# ghのアップデートを確認する
+gh upgrade
+
+# コマンドの補完スクリプトを生成する（bash）
+gh completion -s bash
+
+# コマンドの補完スクリプトを生成する（zsh）
+gh completion -s zsh
+
+# 設定を確認・変更する
+gh config list
+
+# エディタを設定する
+gh config set editor <editor>
+
+# ブラウザを設定する
+gh config set browser <browser>
+
+# エイリアスを作成する
+gh alias set <alias_name> '<gh_command>'
+
+# エイリアス一覧を表示する
+gh alias list
+
+# SSH鍵を一覧表示する
+gh ssh-key list
+
+# SSH鍵を追加する
+gh ssh-key add <public_key_file>
+
+# GPG鍵を一覧表示する
+gh gpg-key list
+
+# 通知を一覧表示する
+gh api notifications --jq '.[] | "\(.subject.title)\t\(.repository.full_name)"'
+
+$ username: gh api user --jq '.login'
+$ editor: echo -e "vim\nnano\ncode\nnvim"

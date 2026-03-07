@@ -1,0 +1,270 @@
+% pnpm, 基本
+
+# pnpmのバージョンを確認する
+pnpm --version
+
+# ヘルプを表示する
+pnpm --help
+
+# 特定のコマンドのヘルプを表示する
+pnpm <command> --help
+
+# pnpm自体をアップデートする
+pnpm self-update
+
+
+% pnpm, パッケージのインストール
+
+# package.jsonの依存関係をすべてインストールする
+pnpm install
+
+# インストールを高速化する（lockfileを変更しない）
+pnpm install --frozen-lockfile
+
+# パッケージをdependenciesに追加する
+pnpm add <package>
+
+# パッケージをdevDependenciesに追加する
+pnpm add -D <package>
+
+# パッケージをpeerDependenciesに追加する
+pnpm add --save-peer <package>
+
+# パッケージをグローバルにインストールする
+pnpm add -g <package>
+
+# 特定のバージョンのパッケージを追加する
+pnpm add <package>@<version>
+
+# タグ指定でパッケージを追加する（例: latest, beta）
+pnpm add <package>@<tag>
+
+# 複数のパッケージを一度に追加する
+pnpm add <package1> <package2>
+
+# GitHubリポジトリからパッケージを追加する
+pnpm add <github_user>/<repo>
+
+
+% pnpm, パッケージの削除・更新
+
+# パッケージを削除する
+pnpm remove <package>
+
+# グローバルパッケージを削除する
+pnpm remove -g <package>
+
+# パッケージをアップデートする
+pnpm update <package>
+
+# すべてのパッケージをアップデートする
+pnpm update
+
+# 最新バージョンに強制アップデートする（semverを無視）
+pnpm update <package> --latest
+
+# インタラクティブにアップデートするパッケージを選択する
+pnpm update --interactive
+
+# グローバルパッケージをアップデートする
+pnpm update -g <package>
+
+
+% pnpm, パッケージの確認
+
+# インストール済みパッケージ一覧を表示する
+pnpm list
+
+# グローバルパッケージ一覧を表示する
+pnpm list -g
+
+# 依存ツリーを表示する（深さを指定）
+pnpm list --depth <depth>
+
+# アップデート可能なパッケージを確認する
+pnpm outdated
+
+# グローバルのアップデート可能なパッケージを確認する
+pnpm outdated -g
+
+# パッケージの詳細情報を表示する
+pnpm info <package>
+
+# パッケージのREADMEを表示する
+pnpm info <package> readme
+
+# パッケージのバージョン一覧を表示する
+pnpm info <package> versions
+
+
+% pnpm, スクリプト実行
+
+# package.jsonのスクリプトを実行する
+pnpm run <script>
+
+# スクリプトを省略形で実行する（run不要）
+pnpm <script>
+
+# 利用可能なスクリプト一覧を表示する
+pnpm run
+
+# テストを実行する
+pnpm test
+
+# ビルドを実行する
+pnpm build
+
+# 開発サーバーを起動する
+pnpm dev
+
+# 並列でスクリプトを実行する
+pnpm run --parallel <script>
+
+# シーケンシャルでスクリプトを実行する
+pnpm run --sequential <script>
+
+# パッケージのbinコマンドを直接実行する
+pnpm exec <command>
+
+# パッケージをインストールせずに一時的に実行する（npxに相当）
+pnpm dlx <package>
+
+
+% pnpm, ストアの管理
+
+# ストアのパスを確認する
+pnpm store path
+
+# ストアの整合性を確認する
+pnpm store status
+
+# 使われていないパッケージをストアから削除する
+pnpm store prune
+
+# ストア内のパッケージをリスト表示する
+pnpm store add <package>
+
+
+% pnpm, ワークスペース（モノレポ）
+
+# ワークスペース全体に依存関係をインストールする
+pnpm install
+
+# 特定のワークスペースにパッケージを追加する
+pnpm add <package> --filter <workspace>
+
+# 特定のワークスペースでスクリプトを実行する
+pnpm run <script> --filter <workspace>
+
+# すべてのワークスペースでスクリプトを実行する
+pnpm run <script> --filter '*'
+
+# 変更されたワークスペースでスクリプトを実行する
+pnpm run <script> --filter '...'
+
+# ワークスペース間で依存パッケージを共有する（カタログ利用）
+pnpm add <package> --save-workspace-protocol
+
+# ワークスペース一覧を表示する
+pnpm list --recursive
+
+# すべてのワークスペースのパッケージをリスト表示する
+pnpm recursive list
+
+$ workspace: pnpm list --recursive --depth 0 --json 2>/dev/null | jq -r '.[].name' 2>/dev/null || echo ""
+
+
+% pnpm, キャッシュ・クリーン
+
+# キャッシュを削除する
+pnpm cache delete
+
+# node_modulesを削除する
+rm -rf node_modules
+
+# node_modulesとlockfileを削除して再インストールする
+rm -rf node_modules pnpm-lock.yaml && pnpm install
+
+# .pnpm-storeのサイズを確認する
+du -sh $(pnpm store path)
+
+
+% pnpm, 設定
+
+# pnpmの設定を確認する
+pnpm config list
+
+# 設定値を取得する
+pnpm config get <key>
+
+# 設定値を変更する
+pnpm config set <key> <value>
+
+# 設定を削除する
+pnpm config delete <key>
+
+# レジストリを変更する
+pnpm config set registry <url>
+
+# スコープ付きパッケージのレジストリを設定する
+pnpm config set @<scope>:registry <url>
+
+# プロキシを設定する
+pnpm config set proxy <url>
+
+
+% pnpm, lockfileとpackage.json
+
+# lockfileを確認する
+cat pnpm-lock.yaml
+
+# lockfileなしでインストールする（非推奨）
+pnpm install --no-lockfile
+
+# lockfileのみを更新する
+pnpm install --lockfile-only
+
+# package.jsonを対話的に作成する
+pnpm init
+
+# パッケージのエクスポートを確認する
+pnpm pkg get exports
+
+# package.jsonのフィールドを設定する
+pnpm pkg set <key>=<value>
+
+# package.jsonのフィールドを削除する
+pnpm pkg delete <key>
+
+
+% pnpm, 便利なテクニック
+
+# npxの代わりにpnpm dlxを使用する
+pnpm dlx create-next-app
+
+# グローバルパッケージのbinパスを確認する
+pnpm bin -g
+
+# ローカルのbinパスを確認する
+pnpm bin
+
+# インストール済みパッケージのパスを確認する
+pnpm root
+
+# グローバルパッケージのパスを確認する
+pnpm root -g
+
+# パッケージのバグレポートページを開く
+pnpm bugs <package>
+
+# パッケージのリポジトリを開く
+pnpm repo <package>
+
+# パッケージをローカルにパックする
+pnpm pack
+
+# パッケージをnpmに公開する
+pnpm publish
+
+# 公開前の確認（ドライラン）
+pnpm publish --dry-run

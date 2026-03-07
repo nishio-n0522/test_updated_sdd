@@ -1,0 +1,187 @@
+% ssh, 基本接続
+
+# SSHで接続する
+ssh <user>@<host>
+
+# ポートを指定して接続する
+ssh -p <port> <user>@<host>
+
+# 秘密鍵を指定して接続する
+ssh -i <key_file> <user>@<host>
+
+# リモートでコマンドを実行する
+ssh <user>@<host> "<command>"
+
+# 詳細なデバッグ情報を表示する
+ssh -v <user>@<host>
+
+# より詳細なデバッグ情報を表示する
+ssh -vvv <user>@<host>
+
+
+% ssh, 鍵の管理
+
+# ED25519鍵ペアを生成する（推奨）
+ssh-keygen -t ed25519 -C "<comment>"
+
+# RSA鍵ペアを生成する（4096ビット）
+ssh-keygen -t rsa -b 4096 -C "<comment>"
+
+# 鍵を指定のパスに生成する
+ssh-keygen -t ed25519 -f ~/.ssh/<key_name>
+
+# 公開鍵を表示する
+cat ~/.ssh/id_ed25519.pub
+
+# 秘密鍵のパスフレーズを変更する
+ssh-keygen -p -f <key_file>
+
+# 秘密鍵の情報を表示する
+ssh-keygen -l -f <key_file>
+
+# 公開鍵をリモートに登録する
+ssh-copy-id <user>@<host>
+
+# 公開鍵を指定してリモートに登録する
+ssh-copy-id -i <key_file>.pub <user>@<host>
+
+# 手動で公開鍵を登録する
+cat ~/.ssh/id_ed25519.pub | ssh <user>@<host> "mkdir -p ~/.ssh && cat >> ~/.ssh/authorized_keys"
+
+
+% ssh, ssh-agent
+
+# ssh-agentを起動する
+eval "$(ssh-agent -s)"
+
+# 秘密鍵をエージェントに追加する
+ssh-add <key_file>
+
+# 秘密鍵をデフォルトで追加する
+ssh-add ~/.ssh/id_ed25519
+
+# エージェントに登録済みの鍵を確認する
+ssh-add -l
+
+# エージェントからすべての鍵を削除する
+ssh-add -D
+
+# エージェントから特定の鍵を削除する
+ssh-add -d <key_file>
+
+
+% ssh, ポートフォワーディング
+
+# ローカルポートフォワーディング（ローカル→リモート）
+ssh -L <local_port>:<remote_host>:<remote_port> <user>@<host>
+
+# リモートポートフォワーディング（リモート→ローカル）
+ssh -R <remote_port>:<local_host>:<local_port> <user>@<host>
+
+# ダイナミックポートフォワーディング（SOCKSプロキシ）
+ssh -D <local_port> <user>@<host>
+
+# バックグラウンドでポートフォワーディングする
+ssh -f -N -L <local_port>:<remote_host>:<remote_port> <user>@<host>
+
+# データベースに安全にアクセスする例（PostgreSQL）
+ssh -L 5432:localhost:5432 <user>@<host>
+
+
+% ssh, 設定ファイル（~/.ssh/config）
+
+# 設定ファイルの例を表示する
+# Host myserver
+#   HostName example.com
+#   User ubuntu
+#   Port 22
+#   IdentityFile ~/.ssh/id_ed25519
+#   ServerAliveInterval 60
+
+# 設定済みホストに接続する
+ssh <alias>
+
+# 設定ファイルの構文確認する
+ssh -G <host>
+
+# 設定ファイルのパーミッションを修正する
+chmod 600 ~/.ssh/config
+
+
+% ssh, ファイル転送（SCP）
+
+# ファイルをリモートにコピーする
+scp <local_file> <user>@<host>:<remote_path>
+
+# ファイルをリモートからコピーする
+scp <user>@<host>:<remote_file> <local_path>
+
+# ディレクトリを再帰的にコピーする
+scp -r <local_dir> <user>@<host>:<remote_path>
+
+# ポートを指定してコピーする
+scp -P <port> <local_file> <user>@<host>:<remote_path>
+
+# 圧縮して転送する
+scp -C <local_file> <user>@<host>:<remote_path>
+
+
+% ssh, SFTP
+
+# SFTPで接続する
+sftp <user>@<host>
+
+# SFTPでファイルをダウンロードする
+sftp <user>@<host>:<remote_file> <local_path>
+
+# SFTPでファイルをアップロードする
+sftp <local_file> <user>@<host>:<remote_path>
+
+
+% ssh, セキュリティ・メンテナンス
+
+# known_hostsから特定のホストを削除する
+ssh-keygen -R <host>
+
+# known_hostsファイルを確認する
+cat ~/.ssh/known_hosts
+
+# ホストの公開鍵のフィンガープリントを確認する
+ssh-keyscan <host> | ssh-keygen -l -f -
+
+# SSHの接続をテストする（接続せずに終了）
+ssh -T <user>@<host>
+
+# SSHのバナーを確認する
+ssh -o StrictHostKeyChecking=no <user>@<host> exit 2>&1
+
+# パーミッションを修正する
+chmod 700 ~/.ssh
+chmod 600 ~/.ssh/id_ed25519
+chmod 644 ~/.ssh/id_ed25519.pub
+chmod 644 ~/.ssh/authorized_keys
+
+
+% ssh, 多段SSH・踏み台
+
+# 踏み台サーバー経由で接続する
+ssh -J <bastion_user>@<bastion_host> <user>@<target_host>
+
+# ProxyJumpを設定ファイルに記述する例
+# Host target
+#   HostName 192.168.1.1
+#   ProxyJump bastion
+
+# 踏み台経由でポートフォワーディングする
+ssh -J <bastion_user>@<bastion_host> -L <local_port>:localhost:<remote_port> <user>@<target_host>
+
+# コマンドを踏み台経由で実行する
+ssh -J <bastion_user>@<bastion_host> <user>@<target_host> "<command>"
+
+$ user: echo "ubuntu"
+$ host: cat ~/.ssh/config 2>/dev/null | grep "Host " | grep -v "#" | awk '{print $2}' || echo ""
+$ key_file: ls ~/.ssh/*.pub 2>/dev/null | sed 's/\.pub$//' || echo "~/.ssh/id_ed25519"
+$ port: echo "22"
+$ local_port: echo "8080"
+$ remote_port: echo "80"
+$ alias: cat ~/.ssh/config 2>/dev/null | grep "^Host " | awk '{print $2}' || echo ""

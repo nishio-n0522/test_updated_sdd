@@ -1,0 +1,109 @@
+% apt, 基本
+
+# パッケージリストを更新する
+sudo apt update
+
+# パッケージリストを更新してすべてのパッケージをアップグレードする
+sudo apt update && sudo apt upgrade -y
+
+# すべてのパッケージをアップグレードする
+sudo apt upgrade
+
+# すべてのパッケージをアップグレードする（依存関係の追加・削除を含む）
+sudo apt full-upgrade
+
+
+% apt, 検索・情報
+
+# 利用可能なパッケージ一覧を表示する
+apt list
+
+# インストール済みのパッケージ一覧を表示する
+apt list --installed
+
+# パッケージの詳細情報を表示する
+apt show -a <package_name>
+
+# パッケージの利用可能なバージョンを表示する
+apt list -a <package_name>
+
+# パッケージを名前や説明で検索する
+apt search <query>
+
+# アップグレード可能なパッケージを確認する
+apt list --upgradeable
+
+# パッケージの依存関係を表示する
+apt depends <package_name>
+
+# パッケージの逆依存関係（このパッケージに依存しているもの）を表示する
+apt rdepends <package_name>
+
+# パッケージがどのリポジトリから提供されているか確認する
+apt policy <package_name>
+
+
+% apt, インストール・アップグレード
+
+# パッケージをインストールする
+sudo apt install <package_name>
+
+# 複数のパッケージをまとめてインストールする
+sudo apt install <package1> <package2>
+
+# 確認なしでパッケージをインストールする
+sudo apt install -y <package_name>
+
+# 特定のバージョンを指定してインストールする
+sudo apt install <package_name>=<package_version>
+
+# ローカルの.debファイルからインストールする
+sudo apt install <filepath_deb>
+
+# 特定のパッケージだけをアップグレードする
+sudo apt install --only-upgrade <package_name>
+
+# ダウンロードだけして、インストールはしない
+sudo apt install --download-only <package_name>
+
+# インストールせずにシミュレーションだけ実行する
+sudo apt install --simulate <package_name>
+
+
+% apt, 削除・クリーンアップ
+
+# パッケージを削除する（設定ファイルは残る）
+sudo apt remove <package_name>
+
+# パッケージを設定ファイルごと完全に削除する
+sudo apt purge <package_name>
+
+# 不要になった依存パッケージを削除する
+sudo apt autoremove
+
+# 不要な依存パッケージを設定ファイルごと削除する
+sudo apt autoremove --purge
+
+# ダウンロード済みのパッケージキャッシュを削除する
+sudo apt clean
+
+# 古いバージョンのキャッシュだけを削除する
+sudo apt autoclean
+
+
+% apt, リポジトリ管理
+
+# リポジトリを追加する
+sudo add-apt-repository <repository>
+
+# リポジトリを削除する
+sudo add-apt-repository --remove <repository>
+
+# 登録されているリポジトリの一覧を表示する
+cat /etc/apt/sources.list
+
+# サードパーティのリポジトリ設定を確認する
+ls /etc/apt/sources.list.d/
+
+# GPG鍵を追加する（URLから取得）
+curl -fsSL <key_url> | sudo gpg --dearmor -o /etc/apt/keyrings/<keyname>.gpg

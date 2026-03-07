@@ -1,0 +1,121 @@
+% vitest, 基本
+
+# テストをすべて実行する
+vitest run
+
+# ウォッチモードでテストを実行する（デフォルト）
+vitest
+
+# UIモードでテストを実行する
+vitest --ui
+
+# ヘルプを表示する
+vitest --help
+
+# Vitestのバージョンを確認する
+vitest --version
+
+
+% vitest, テストの実行
+
+# 特定のファイルのテストを実行する
+vitest run <test_file>
+
+# ファイル名パターンでテストをフィルタする
+vitest run <pattern>
+
+# テスト名でフィルタする
+vitest run -t "<test_name>"
+
+# 特定のディレクトリのテストを実行する
+vitest run src/features/
+
+# 失敗したテストのみ再実行する
+vitest run --reporter=verbose
+
+# シングルスレッドで実行する（デバッグ用）
+vitest run --pool=forks --poolOptions.forks.singleFork
+
+# テストを並列で実行する
+vitest run --reporter=verbose --threads
+
+
+% vitest, カバレッジ
+
+# カバレッジを計測してテストを実行する
+vitest run --coverage
+
+# カバレッジレポートをHTML形式で出力する
+vitest run --coverage --coverage.reporter=html
+
+# カバレッジレポートをlcov形式で出力する
+vitest run --coverage --coverage.reporter=lcov
+
+# 特定ファイルのカバレッジを計測する
+vitest run --coverage --coverage.include='src/features/**'
+
+# カバレッジの閾値を設定する（vitest.config.tsで設定する例）
+# coverage: { thresholds: { lines: 80, branches: 80 } }
+
+
+% vitest, ウォッチモード
+
+# ウォッチモードで起動する
+vitest watch
+
+# 変更されたファイルのみテストを実行する
+vitest watch --changed
+
+# 特定のファイルを監視する
+vitest watch <pattern>
+
+# ウォッチモードでUIを表示する
+vitest --ui --watch
+
+
+% vitest, デバッグ・調査
+
+# 詳細なテスト結果を表示する
+vitest run --reporter=verbose
+
+# テスト結果をJSONで出力する
+vitest run --reporter=json --outputFile=test-results.json
+
+# テスト結果をJUnitXML形式で出力する
+vitest run --reporter=junit --outputFile=test-results.xml
+
+# コンソール出力を表示する
+vitest run --reporter=verbose --silent=false
+
+# テストタイムアウトを変更する
+vitest run --testTimeout=10000
+
+# シーケンシャルに実行する（デバッグ用）
+vitest run --sequence.concurrent=false
+
+# テストの実行順序をランダムにする
+vitest run --sequence.shuffle
+
+# 特定のテストスイートのみ実行する（describe名でフィルタ）
+vitest run -t "<suite_name>"
+
+
+% vitest, 設定
+
+# vitest.config.tsの設定例（環境設定）
+# test: { environment: 'jsdom' }
+
+# グローバルテスト関数を有効にする
+# test: { globals: true }
+
+# セットアップファイルを指定する
+# test: { setupFiles: ['./src/test/setup.ts'] }
+
+# テストの対象ファイルを指定する
+# test: { include: ['**/*.{test,spec}.{ts,tsx}'] }
+
+# テストの除外ファイルを指定する
+# test: { exclude: ['node_modules', 'dist'] }
+
+$ test_file: find . -name "*.test.ts" -o -name "*.test.tsx" -o -name "*.spec.ts" -o -name "*.spec.tsx" | grep -v node_modules 2>/dev/null
+$ pattern: echo "Enter file name pattern (e.g., auth, mindmap)"

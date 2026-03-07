@@ -1,0 +1,199 @@
+% jq, 基本
+
+# jqのバージョンを確認する
+jq --version
+
+# ヘルプを表示する
+jq --help
+
+# JSONを整形して表示する
+jq '.' <file>
+
+# STDINからJSONを整形する
+echo '{"key":"value"}' | jq '.'
+
+# カラー出力を無効にする
+jq -M '.' <file>
+
+# 整形なしでコンパクトに出力する
+jq -c '.' <file>
+
+
+% jq, 値の取得
+
+# トップレベルのキーを取得する
+jq '.key' <file>
+
+# ネストしたキーを取得する
+jq '.parent.child' <file>
+
+# 配列の要素を取得する（0始まり）
+jq '.[0]' <file>
+
+# 配列の最後の要素を取得する
+jq '.[-1]' <file>
+
+# 配列のスライスを取得する
+jq '.[2:5]' <file>
+
+# 配列のすべての要素を展開する
+jq '.[]' <file>
+
+# オブジェクトの配列から特定のキーを取得する
+jq '.[].key' <file>
+
+# オプショナルな取得（エラーを無視する）
+jq '.key?' <file>
+
+
+% jq, フィルタリング
+
+# 条件に一致する要素をフィルタする
+jq '.[] | select(.key == "value")' <file>
+
+# 数値比較でフィルタする
+jq '.[] | select(.age > 30)' <file>
+
+# 文字列の前方一致でフィルタする
+jq '.[] | select(.name | startswith("foo"))' <file>
+
+# 文字列の部分一致でフィルタする
+jq '.[] | select(.name | contains("foo"))' <file>
+
+# nullでない要素をフィルタする
+jq '.[] | select(.key != null)' <file>
+
+# 複数条件でフィルタする（AND）
+jq '.[] | select(.age > 20 and .active == true)' <file>
+
+# 複数条件でフィルタする（OR）
+jq '.[] | select(.status == "active" or .status == "pending")' <file>
+
+
+% jq, 変換・加工
+
+# 特定のキーだけ抽出して新しいオブジェクトを作る
+jq '{name: .name, age: .age}' <file>
+
+# 配列をmapで変換する
+jq '[.[] | {id: .id, label: .name}]' <file>
+
+# キーの名前を変更する
+jq '{newKey: .oldKey}' <file>
+
+# 文字列を追加する
+jq '.name + " suffix"' <file>
+
+# 数値を計算する
+jq '.price * .quantity' <file>
+
+# 配列の長さを取得する
+jq '.[] | length' <file>
+
+# 文字列を大文字に変換する
+jq '.name | ascii_upcase' <file>
+
+# 文字列をsplitする
+jq '.csv | split(",")' <file>
+
+# 配列をソートする
+jq 'sort_by(.key)' <file>
+
+# 配列を逆順にする
+jq 'reverse' <file>
+
+# 配列をユニークにする
+jq 'unique' <file>
+
+# 配列をユニークにする（キー指定）
+jq 'unique_by(.key)' <file>
+
+# 配列をグループ化する
+jq 'group_by(.category)' <file>
+
+# 最大値・最小値を取得する
+jq 'max_by(.score)' <file>
+
+# キー一覧を取得する
+jq 'keys' <file>
+
+# 値一覧を取得する
+jq 'values' <file>
+
+
+% jq, 集計・統計
+
+# 配列の要素数を数える
+jq '. | length' <file>
+
+# 数値の合計を計算する
+jq '[.[] | .value] | add' <file>
+
+# 数値の平均を計算する
+jq '[.[] | .value] | (add / length)' <file>
+
+# フィルタした要素を数える
+jq '[.[] | select(.active == true)] | length' <file>
+
+
+% jq, 出力形式
+
+# 生の文字列を出力する（クォートなし）
+jq -r '.name' <file>
+
+# 改行区切りJSONで出力する（NDJSON）
+jq -c '.[]' <file>
+
+# タブ区切りで出力する
+jq -r '[.name, .age] | @tsv' <file>
+
+# CSV形式で出力する
+jq -r '[.name, .age] | @csv' <file>
+
+# シェルで使えるエスケープをする
+jq -r '.value | @sh' <file>
+
+# Base64エンコードする
+jq -r '.data | @base64' <file>
+
+# Base64デコードする
+jq -r '.data | @base64d' <file>
+
+# URLエンコードする
+jq -r '.param | @uri' <file>
+
+
+% jq, 便利なテクニック
+
+# nullを指定のデフォルト値に置き換える
+jq '.key // "default"' <file>
+
+# 複数のフィルタを組み合わせる（パイプ）
+jq '.[] | select(.active) | .name' <file>
+
+# 変数を使う
+jq --arg name "Alice" '.[] | select(.name == $name)' <file>
+
+# 数値変数を使う
+jq --argjson threshold 100 '.[] | select(.value > $threshold)' <file>
+
+# 別のJSONファイルを読み込む
+jq -s '.[0] * .[1]' file1.json file2.json
+
+# 配列を再帰的に展開する
+jq '.. | numbers' <file>
+
+# try-catchでエラーを処理する
+jq 'try .key catch "error"' <file>
+
+# if-then-elseを使う
+jq 'if .value > 0 then "positive" else "non-positive" end' <file>
+
+# 環境変数を参照する
+jq -r '.url' <file>
+
+# curlと組み合わせてAPIレスポンスを処理する
+curl -s <url> | jq '.'
+
+$ file: find . -name "*.json" -not -path "*/node_modules/*" -not -name "package-lock.json" 2>/dev/null | head -20
+$ url: echo "https://api.example.com/data"

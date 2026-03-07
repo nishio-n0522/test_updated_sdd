@@ -1,0 +1,143 @@
+% mise, 基本
+
+# miseのバージョンを確認する
+mise --version
+
+# ヘルプを表示する
+mise --help
+
+# 特定のコマンドのヘルプを表示する
+mise <command> --help
+
+# miseをアップデートする
+mise self-update
+
+# 現在の設定状態を確認する
+mise doctor
+
+
+% mise, ツールのインストール・管理
+
+# 現在のディレクトリの設定に従いツールをインストールする
+mise install
+
+# 特定のツールをインストールする
+mise install <tool>
+
+# 特定のバージョンのツールをインストールする
+mise install <tool>@<version>
+
+# すべてのツールを最新バージョンにアップグレードする
+mise upgrade
+
+# 特定のツールをアップグレードする
+mise upgrade <tool>
+
+# インストール済みのツールを確認する
+mise list
+
+# 利用可能なバージョンを確認する
+mise ls-remote <tool>
+
+# ツールをアンインストールする
+mise uninstall <tool>@<version>
+
+# 未使用のツールを削除する
+mise prune
+
+
+% mise, バージョン管理
+
+# 現在のディレクトリで使用するバージョンを設定する（.mise.tomlに記録）
+mise use <tool>@<version>
+
+# グローバルなバージョンを設定する
+mise use -g <tool>@<version>
+
+# 現在有効なツールのバージョンを確認する
+mise current
+
+# 特定ツールの現在のバージョンを確認する
+mise current <tool>
+
+# 環境変数として現在の設定を確認する
+mise env
+
+# シェルのPATHを確認する
+mise which <tool>
+
+
+% mise, 設定ファイル
+
+# .mise.tomlを初期化する
+mise init
+
+# 現在の設定ファイルの場所を確認する
+mise config ls
+
+# グローバル設定ファイルを編集する
+mise config
+
+# 設定の優先順位を確認する（ローカル > グローバル）
+mise settings
+
+# 信頼するディレクトリを設定する
+mise trust
+
+# 信頼するディレクトリを解除する
+mise trust --untrust
+
+
+% mise, タスク実行
+
+# タスク一覧を表示する
+mise tasks
+
+# タスクを実行する
+mise run <task>
+
+# タスクをwatchモードで実行する
+mise run --watch <task>
+
+# 利用可能なタスクの詳細を表示する
+mise tasks --verbose
+
+
+% mise, プラグイン管理
+
+# インストール済みプラグイン一覧を確認する
+mise plugins list
+
+# 利用可能なプラグインを検索する
+mise plugins ls-remote
+
+# プラグインを追加する
+mise plugins install <plugin>
+
+# プラグインをアップデートする
+mise plugins update <plugin>
+
+# プラグインを削除する
+mise plugins uninstall <plugin>
+
+
+% mise, 便利なテクニック
+
+# シェルの設定を確認する（bashrcへの追記内容を表示）
+mise activate bash
+
+# 現在の環境変数をexportする
+eval "$(mise env)"
+
+# 特定コマンドを指定バージョンで実行する
+mise exec <tool>@<version> -- <command>
+
+# キャッシュをクリアする
+mise cache clear
+
+# デバッグモードで実行する
+mise --debug install
+
+$ tool: mise plugins list 2>/dev/null | tr -d ' ' || echo ""
+$ version: mise ls-remote ${tool} 2>/dev/null | tail -10 || echo ""
+$ task: mise tasks 2>/dev/null | awk 'NR>1 {print $1}' || echo ""
