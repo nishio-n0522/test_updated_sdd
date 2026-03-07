@@ -39,7 +39,7 @@ allowed-tools: Read
 
 - 技術スタック・システム構成図（architecture.md の責務）
 - コンポーネント設計・実装インターフェース（architecture.md の責務）
-- データモデルの詳細: フィールド定義・型・制約・ER図の物理設計（データモデル設計書の責務）
+- データモデルの詳細: フィールド定義・型・制約・ER図の物理設計（`data-model-design` スキルの責務）
 - 各画面の詳細なUI仕様・操作挙動（screen-specification の責務）
 - エラーハンドリングの詳細: 具体的なエラーメッセージ・UI表示方法（screen-specification の責務）
 - パフォーマンス最適化・セキュリティ考慮事項（architecture.md の責務）

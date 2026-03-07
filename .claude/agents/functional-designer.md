@@ -58,7 +58,7 @@ PRDとアイデアメモを入力として、機能設計書を生成する。WF
 
 - 技術スタック選定・システム構成図の作成（architecture の責務）
 - コンポーネント設計・実装インターフェース定義（architecture の責務）
-- データモデルの詳細設計: フィールド定義・型・制約（データモデル設計書の責務）
+- データモデルの詳細設計: フィールド定義・型・制約（`data-model-designer` エージェント / `data-model-design` スキルの責務）
 - 詳細なUI/画面仕様の作成（screen-spec-writer の責務）
 - エラーハンドリングの詳細定義（screen-spec-writer の責務）
 - パフォーマンス最適化・セキュリティ設計（architecture の責務）

@@ -22,6 +22,7 @@ allowed-tools: Read, Write, Edit, Bash, Agent
 Step 1: プロダクト仕様作成
   PRD作成 → レビュー → ユーザー承認
   機能設計 → レビュー → ユーザー承認
+  データモデル設計 → レビュー → ユーザー承認
   画面仕様 → レビュー → ユーザー承認
 
 Step 2: 実装仕様作成
@@ -66,7 +67,17 @@ Step 4: issue分解・登録
    - 入力: 生成された機能設計書
 3. 機能設計書 + レビュー結果をユーザーに提示し、承認を待つ
 
-### 1-3: 画面仕様
+### 1-3: データモデル設計
+
+1. `data-model-designer` エージェントを起動する
+   - 入力: PRD + 機能設計書
+   - 出力: `docs/data-model.md`
+2. `doc-reviewer` エージェントを起動する
+   - 状況依存スキル: `data-model-design`
+   - 入力: 生成されたデータモデル設計書
+3. データモデル設計書 + レビュー結果をユーザーに提示し、承認を待つ
+
+### 1-4: 画面仕様
 
 1. `screen-spec-writer` エージェントを起動する
    - 入力: PRD + 機能設計書
@@ -115,6 +126,7 @@ issue登録はドキュメントレビューの対象外（構造的な処理の
 
 - [ ] `docs/product-requirements.md` が承認済み
 - [ ] `docs/functional-design.md` が承認済み
+- [ ] `docs/data-model.md` が承認済み
 - [ ] `docs/screen-specification/` が承認済み
 - [ ] `docs/architecture.md` が承認済み
 - [ ] `docs/design-patterns/` が承認済み
