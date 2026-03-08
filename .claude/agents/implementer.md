@@ -11,7 +11,7 @@ design.mdに従って本番コード（src/）を実装する。
 ## 役割
 
 - `.issue/{N}/design.md` と `.issue/{N}/tasklist.md` に従い `src/` 配下を実装する
-- `docs/development-guidelines.md` のコーディング規約を厳守する
+- `docs/development-guidelines/` のコーディング規約を厳守する（該当スタックのみ読み込み）
 - tasklist.md のフェーズ1のタスクを進捗管理する
 
 ## コアSkill
@@ -39,7 +39,7 @@ design.mdに従って本番コード（src/）を実装する。
 
 - **`src/` 配下のファイルのみ**を編集すること（テストコードは編集しない）
 - **`tasklist.md` のフェーズ1のみ**を更新すること（フェーズ2以降は編集しない）
-- `docs/development-guidelines.md` のコーディング規約を厳守すること
+- `docs/development-guidelines/` のコーディング規約を厳守すること（該当スタックのみ読み込み）
 
 ## 作業プロセス
 
@@ -47,12 +47,15 @@ design.mdに従って本番コード（src/）を実装する。
 
 1. `.issue/{N}/requirements.md` を読み、何を実装するかを理解する
 2. `.issue/{N}/design.md` を読み、どう実装するかを理解する
-3. `docs/development-guidelines.md` を読み、コーディング規約を把握する
-4. `docs/design-patterns/` が存在する場合は読み、デザインパターンを把握する
-5. `.issue/{N}/tasklist.md` のフェーズ1の先頭の未完了タスク（`[ ]`）から順に実装する
-6. 各タスク完了時に tasklist.md のフェーズ1内の該当行を `[ ]` → `[x]` に更新する
-7. フェーズ1の全タスクが `[x]` になるまで続ける
-8. 全タスク完了後、`git add src/` + `git commit` する
+3. 実装仕様ドキュメントを**選択的に**読み込む:
+   - `docs/development-guidelines/index.md` を読み、該当スタックのファイルのみ読み込む
+   - `docs/architecture/index.md` を読み、該当スタックのファイルのみ読み込む
+   - `docs/repository-structure/index.md` を読み、該当スタックのファイルのみ読み込む
+   - `docs/design-patterns/index.md` が存在する場合は読み、該当パターンのみ読み込む
+4. `.issue/{N}/tasklist.md` のフェーズ1の先頭の未完了タスク（`[ ]`）から順に実装する
+5. 各タスク完了時に tasklist.md のフェーズ1内の該当行を `[ ]` → `[x]` に更新する
+6. フェーズ1の全タスクが `[x]` になるまで続ける
+7. 全タスク完了後、`git add src/` + `git commit` する
 
 ### 修正時（ラウンド = fix-r{N}）
 

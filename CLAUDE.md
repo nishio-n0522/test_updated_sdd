@@ -95,9 +95,10 @@ issueの作成は `/create-issue` で対話的に行い、実行は `/autopilot`
 - **functional-design.md** - 機能設計書（機能分解 + ドメインモデル概念 + 概要レベルUI設計）
 - **data-model.md** - データモデル設計書（エンティティのフィールド定義・型・制約・ER図）
 - **screen-specification/** - 画面仕様書（詳細な画面レイアウト・操作挙動、画面ごとに分割）
-- **architecture.md** - 技術仕様書
-- **repository-structure.md** - リポジトリ構造定義書
-- **development-guidelines.md** - 開発ガイドライン
+- **architecture/** - 技術仕様書（index.md + スタック別ファイル）
+- **repository-structure/** - リポジトリ構造定義書（index.md + スタック別ファイル）
+- **development-guidelines/** - 開発ガイドライン（index.md + スタック別ファイル）
+- **design-patterns/** - デザインパターン（index.md + 個別パターンファイル）
 - **glossary.md** - ユビキタス言語定義
 
 ### issue固有ドキュメント(`.issue/{issue番号}/`)

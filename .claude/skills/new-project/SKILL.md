@@ -91,7 +91,7 @@ Step 4: issue分解・登録
 
 1. `implementation-spec-writer` エージェントを起動する
    - 入力: PRD + 機能設計書 + 画面仕様書
-   - 出力: `docs/architecture.md`, `docs/design-patterns/`, `docs/development-guidelines.md`, `docs/repository-structure.md`
+   - 出力: `docs/architecture/`, `docs/design-patterns/`, `docs/development-guidelines/`, `docs/repository-structure/`
 2. `doc-reviewer` エージェントを起動する
    - 状況依存スキル: `architecture-design`
    - 入力: 生成された実装仕様ドキュメント群
@@ -128,10 +128,10 @@ issue登録はドキュメントレビューの対象外（構造的な処理の
 - [ ] `docs/functional-design.md` が承認済み
 - [ ] `docs/data-model.md` が承認済み
 - [ ] `docs/screen-specification/` が承認済み
-- [ ] `docs/architecture.md` が承認済み
+- [ ] `docs/architecture/` が承認済み
 - [ ] `docs/design-patterns/` が承認済み
-- [ ] `docs/development-guidelines.md` が承認済み
-- [ ] `docs/repository-structure.md` が承認済み
+- [ ] `docs/development-guidelines/` が承認済み
+- [ ] `docs/repository-structure/` が承認済み
 - [ ] `docs/glossary.md` が承認済み
 - [ ] GitHub issues が登録済み
 - [ ] `.issue/` ディレクトリに詳細ドキュメントが配置済み
