@@ -28,8 +28,8 @@
 ### 基本フロー
 
 1. **ドキュメント作成**: 永続ドキュメント(`docs/`)で「何を作るか」を定義
-2. **作業計画**: ステアリングファイル(`.steering/`)で「今回何をするか」を計画
-3. **実装**: tasklist.mdに従って実装し、進捗を随時更新
+2. **issue作成**: GitHub issueと`.issue/{issue番号}/`で「今回何をするか」を計画
+3. **実装**: autopilotがissueを自動実行し、進捗を随時更新
 4. **検証**: テストと動作確認
 5. **更新**: 必要に応じてドキュメント更新
 
@@ -55,25 +55,26 @@
 3. Grepで既存の類似実装を検索
 4. 既存パターンを理解してから実装開始
 
-#### ステアリングファイル管理
+#### issue管理
 
-作業ごとに `.steering/[YYYYMMDDHHmmss]-[タスク名]/` を作成:
+issueごとに `.issue/{issue番号}/` を作成し、ライフサイクル全体のドキュメントを格納:
 
-- `requirements.md`: 今回の要求内容
-- `design.md`: 実装アプローチ
-- `tasklist.md`: 具体的なタスクリスト
+```
+.issue/{issue番号}/
+├── spec.md                # issue仕様書（issue登録時に作成）
+├── requirements.md        # 要求の構造化（autopilot実行時に作成）
+├── design.md              # 実装設計（autopilot実行時に作成）
+├── test-spec.md           # テスト仕様（autopilot実行時に作成）
+├── tasklist.md            # タスクリスト・進捗管理（autopilot実行時に作成）
+├── reviews/               # レビュー結果（autopilot実行時に作成）
+│   ├── review-coding-r{N}.md
+│   ├── review-architecture-r{N}.md
+│   └── test-results-r{N}.md
+└── fixes/                 # 修正指示書（レビュー指摘時に作成）
+    └── fix-order-r{N}.md
+```
 
-命名規則: `20250115143052-add-user-profile` 形式（年月日時分秒）
-
-#### ステアリングファイルの管理
-
-**作業計画・実装・検証時は`steering`スキルを使用してください。**
-
-- **作業計画時**: `Skill('steering')`でモード1(ステアリングファイル作成)
-- **実装時**: `Skill('steering')`でモード2(実装とtasklist.md更新管理)
-- **検証時**: `Skill('steering')`でモード3(振り返り)
-
-詳細な手順と更新管理のルールはsteeringスキル内に定義されています。
+issueの作成は `/create-issue` で対話的に行い、実行は `/autopilot` で自動化します。
 
 ## ディレクトリ構造
 
@@ -99,21 +100,25 @@
 - **development-guidelines.md** - 開発ガイドライン
 - **glossary.md** - ユビキタス言語定義
 
-### 作業単位のドキュメント(`.steering/`)
+### issue固有ドキュメント(`.issue/{issue番号}/`)
 
-特定の開発作業における「今回何をするか」を定義:
+各issueのライフサイクル全体に関わるドキュメントを保持:
 
-- `requirements.md`: 今回の作業の要求内容
-- `design.md`: 変更内容の設計
-- `tasklist.md`: タスクリスト
+- `spec.md`: issue仕様書（issue登録時に作成）
+- `requirements.md`: 要求の構造化（autopilot実行時に作成）
+- `design.md`: 実装設計（autopilot実行時に作成）
+- `test-spec.md`: テスト仕様（autopilot実行時に作成）
+- `tasklist.md`: タスクリスト・進捗管理（autopilot実行時に作成）
+- `reviews/`: レビュー結果（autopilot実行時に作成）
+- `fixes/`: 修正指示書（レビュー指摘時に作成）
 
 ## 開発プロセス
 
 ### 初回セットアップ
 
 1. このテンプレートを使用
-2. `/setup-project` で永続的ドキュメント作成(対話的に6つ作成)
-3. `/add-feature [機能]` で機能実装
+2. `/new-project` で永続的ドキュメント作成・issue分解・登録
+3. `/autopilot` でissueを自動実行
 
 ### 段階的UI設計
 
@@ -137,8 +142,8 @@ UI設計は2段階で詳細化します:
 > architecture.mdのパフォーマンス要件を見直して
 > glossary.mdに新しいドメイン用語を追加
 
-# 機能追加(定型フローはコマンド)
-> /add-feature ユーザープロフィール編集
+# issue作成(定型フローはコマンド)
+> /create-issue ユーザープロフィール編集
 
 # 詳細レビュー(詳細なレポートが必要なとき)
 > /review-docs docs/product-requirements.md
@@ -154,8 +159,8 @@ UI設計は2段階で詳細化します:
 - 頻繁に更新されない
 - プロジェクト全体の「北極星」
 
-### 作業単位のドキュメント(`.steering/`)
+### issue固有ドキュメント(`.issue/`)
 
-- 特定の作業に特化
-- 作業ごとに新規作成
-- 履歴として保持
+- 特定のissueに特化
+- issueごとに作成
+- 実装のライフサイクル全体を記録

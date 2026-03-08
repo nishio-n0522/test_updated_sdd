@@ -405,21 +405,19 @@ src/features/task/
 
 ## 特殊ディレクトリ
 
-### .steering/ (ステアリングファイル)
+### .issue/ (issue固有ドキュメント)
 
-**役割**: 特定の開発作業における「今回何をするか」を定義
+**役割**: 各issueのライフサイクル全体に関わるドキュメントを保持
 
 **構造**:
 
 ```
-.steering/
-└── [YYYYMMDDHHmmss]-[task-name]/
-    ├── requirements.md      # 今回の作業の要求内容
-    ├── design.md            # 変更内容の設計
-    └── tasklist.md          # タスクリスト
+.issue/
+└── {issue番号}/
+    ├── （実装前）変更仕様書、影響範囲分析
+    ├── （実装中）作業リスト（タスク分解・進捗管理）
+    └── （実装後）レビュー結果、品質検証ドキュメント
 ```
-
-**命名規則**: `20250115143052-add-user-profile` 形式（年月日時分秒）
 
 ### .claude/ (Claude Code設定)
 
@@ -443,7 +441,7 @@ src/features/task/
 - `node_modules/`
 - `dist/`
 - `.env`
-- `.steering/` (タスク管理用の一時ファイル)
+- `.issue/` (issue固有ドキュメント)
 - `*.log`
 - `.DS_Store`
 
@@ -453,5 +451,5 @@ src/features/task/
 
 - `dist/`
 - `node_modules/`
-- `.steering/`
+- `.issue/`
 - `coverage/`
