@@ -87,7 +87,7 @@ issueの作成は `/create-issue` で対話的に行い、実行は `/autopilot`
 - 壁打ち・ブレインストーミングの成果物
 - 技術調査メモ
 - 自由形式（構造化は最小限）
-- `/setup-project`実行時に自動的に読み込まれる
+- `/new-project`実行時に自動的に読み込まれる
 
 #### 正式版ドキュメント
 
@@ -125,7 +125,7 @@ issueの作成は `/create-issue` で対話的に行い、実行は `/autopilot`
 
 UI設計は2段階で詳細化します:
 
-1. **初期段階（setup-project時）**: `functional-design.md` に概要レベルのUI設計を記載
+1. **初期段階（new-project時）**: `functional-design.md` に概要レベルのUI設計を記載
    - 画面一覧、大まかなレイアウト、画面遷移の全体像
    - 「だいたいこんなアプリ」のイメージを定義
 2. **実装が進んだ後**: `screen-specification/` に詳細な画面仕様を記載
@@ -147,7 +147,7 @@ UI設計は2段階で詳細化します:
 > /create-issue ユーザープロフィール編集
 
 # 詳細レビュー(詳細なレポートが必要なとき)
-> /review-docs docs/product-requirements.md
+> /doc-review docs/product-requirements.md
 ```
 
 **ポイント**: スペック駆動開発の詳細を意識する必要はありません。Claude Codeが適切なスキルを判断してロードします。
