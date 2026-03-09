@@ -92,7 +92,7 @@ issueの作成は `/create-issue` で対話的に行い、実行は `/autopilot`
 #### 正式版ドキュメント
 
 - **product-requirements.md** - プロダクト要求定義書
-- **functional-design.md** - 機能設計書（機能分解 + ドメインモデル概念 + 概要レベルUI設計）
+- **functional-design.md** - 機能設計書（機能分解 + ドメインモデル概念 + 画面構成概要）
 - **data-model.md** - データモデル設計書（エンティティのフィールド定義・型・制約・ER図）
 - **screen-specification/** - 画面仕様書（詳細な画面レイアウト・操作挙動、画面ごとに分割）
 - **architecture/** - 技術仕様書（index.md + スタック別ファイル）
@@ -121,17 +121,17 @@ issueの作成は `/create-issue` で対話的に行い、実行は `/autopilot`
 2. `/new-project` で永続的ドキュメント作成・issue分解・登録
 3. `/autopilot` でissueを自動実行
 
-### 段階的UI設計
+### UI設計の二層構造
 
-UI設計は2段階で詳細化します:
+UI設計は2つのドキュメントで役割を分担します:
 
-1. **初期段階（new-project時）**: `functional-design.md` に概要レベルのUI設計を記載
-   - 画面一覧、大まかなレイアウト、画面遷移の全体像
+1. **`functional-design.md`（画面構成概要）**: 画面一覧、大まかなレイアウト、画面遷移の全体像
    - 「だいたいこんなアプリ」のイメージを定義
-2. **実装が進んだ後**: `screen-specification/` に詳細な画面仕様を記載
+2. **`screen-specification/`（画面仕様書）**: 各画面のUI・操作・挙動の詳細定義
    - `index.md`（画面一覧・画面遷移図）+ 画面ごとの個別ファイル
    - 全UI要素の定義、状態別ワイヤーフレーム、操作ごとの挙動
-   - 実装経験で得た知見を反映した詳細仕様
+
+両方とも `/new-project` のStep 1で作成されます。
 
 ### 日常的な使い方
 
