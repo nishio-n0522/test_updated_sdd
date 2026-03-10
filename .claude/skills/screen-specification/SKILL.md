@@ -15,10 +15,13 @@ allowed-tools: Read
 
 ## 入出力
 
-| 項目 | WF2（新規） | WF4（変更） |
+| 項目 | WF2: 新規作成 | WF4: 既存変更 |
 |---|---|---|
 | 入力 | PRD + 機能設計書 | 要件 + 既存 `docs/screen-specification/` |
 | 出力 | `docs/screen-specification/` | 画面変更仕様 |
+
+> WF2（新規作成）: プロジェクト立ち上げ時にドキュメントを新規作成するワークフロー
+> WF4（既存変更）: 既存ドキュメントに対して変更・追記するワークフロー
 
 ## 機能設計書（functional-design）との関係
 
