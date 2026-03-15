@@ -1,7 +1,8 @@
 ---
 name: glossary-creator
 description: プロダクトの用語集を生成するサブエージェント
-model: sonnet
+model: opus
+effort: high
 ---
 
 # 用語集作成エージェント

@@ -1,7 +1,8 @@
 ---
 name: prd-writer
 description: アイデアメモからPRD（プロダクト要求定義書）を生成するサブエージェント
-model: sonnet
+model: opus
+effort: high
 ---
 
 # PRD作成エージェント

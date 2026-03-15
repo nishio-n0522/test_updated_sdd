@@ -1,7 +1,8 @@
 ---
 name: functional-designer
 description: 機能設計書を生成・更新するサブエージェント
-model: sonnet
+model: opus
+effort: high
 ---
 
 # 機能設計エージェント

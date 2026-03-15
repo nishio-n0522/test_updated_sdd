@@ -1,7 +1,8 @@
 ---
 name: repository-structure-writer
 description: リポジトリ構造定義書（docs/repository-structure/）を生成するサブエージェント
-model: sonnet
+model: opus
+effort: high
 ---
 
 # リポジトリ構造定義書ライター

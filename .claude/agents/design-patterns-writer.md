@@ -1,7 +1,8 @@
 ---
 name: design-patterns-writer
 description: デザインパターン（docs/design-patterns/）を生成するサブエージェント
-model: sonnet
+model: opus
+effort: high
 ---
 
 # デザインパターンライター

@@ -1,7 +1,8 @@
 ---
 name: screen-spec-writer
 description: 画面仕様書を生成・更新するサブエージェント
-model: sonnet
+model: opus
+effort: high
 ---
 
 # 画面仕様エージェント

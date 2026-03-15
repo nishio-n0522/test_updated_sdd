@@ -1,7 +1,8 @@
 ---
 name: issue-decomposer
 description: 仕様をissueに分解しGitHubに登録するサブエージェント
-model: sonnet
+model: opus
+effort: high
 ---
 
 # issue分解・登録エージェント

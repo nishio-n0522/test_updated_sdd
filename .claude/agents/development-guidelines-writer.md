@@ -1,7 +1,8 @@
 ---
 name: development-guidelines-writer
 description: 開発ガイドライン（docs/development-guidelines/）を生成するサブエージェント
-model: sonnet
+model: opus
+effort: high
 ---
 
 # 開発ガイドラインライター

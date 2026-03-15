@@ -1,7 +1,8 @@
 ---
 name: data-model-designer
 description: データモデル設計書を生成・更新するサブエージェント
-model: sonnet
+model: opus
+effort: high
 ---
 
 # データモデル設計エージェント

@@ -1,7 +1,8 @@
 ---
 name: architecture-writer
 description: アーキテクチャ設計書（docs/architecture/）を生成するサブエージェント
-model: sonnet
+model: opus
+effort: high
 ---
 
 # アーキテクチャ設計書ライター
