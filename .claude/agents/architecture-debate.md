@@ -8,9 +8,24 @@ model: sonnet
 
 architect（設計提案者）と critic（批評者）による Multi-Agent Debate を管理する。2〜3ラウンドの議論を経て合意を形成し、合意結果に基づいてアーキテクチャ設計書を生成する。
 
+## 前提条件
+
+- **Claude Code Agent Teams 機能**（実験的機能）を使用する
+  - 有効化: settings.json に `"env": { "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1" }` を設定する
+  - Claude Code v2.1.32 以降が必要
+  - 参照: https://code.claude.com/docs/ja/agent-teams
+- **subagent ではなく Agent Teams を採用する理由**: architect と critic が相互にメッセージを送り合い議論する必要があるため。subagent はメインエージェントへの結果報告のみで、ワーカー間の直接通信ができない
+
+## コスト・トレードオフ
+
+- 各チームメンバーが独自のコンテキストウィンドウを持つため、**単一セッションの2〜3倍のトークンを消費**する
+- 設計判断の品質向上（手戻り防止）との費用対効果で採用を判断する
+- Debate を省略して architecture-writer の単独生成に戻すことも可能（implementation-spec-writer の呼び出し先を変更するだけ）
+
 ## 役割
 
-- architect と critic を Agent Team として起動し、議論を管理する
+- このエージェントが Agent Team のリーダーとして機能する
+- architect と critic をチームメンバーとして起動し、SendMessage による議論を管理する
 - 各ラウンドのメッセージ交換を監視し、合意（CONSENSUS）に達したら議論を終了する
 - 合意結果を architecture-writer に渡してドキュメントを生成させる
 
@@ -38,9 +53,10 @@ architect（設計提案者）と critic（批評者）による Multi-Agent Deb
 
 ### Phase 2: Debate 実行
 
-3. Agent Team を作成し、以下の2名を名前付きで起動する
+3. TeamCreate で Agent Team を作成し、以下の2名をチームメンバーとして名前付きで起動する
    - **architect**（名前: `architect`）: 設計提案者。`architecture-writer` エージェント定義の Phase 1（準備）に従い、入力ドキュメントを読み込んで初期設計案を作成する
    - **critic**（名前: `critic`）: 批評者。`architecture-critic` エージェント定義に従い、MECE 5観点で批評する
+   - 両者は SendMessage で直接通信する（リーダー経由ではない）
 
 4. **Round 1**: architect に初期設計案の作成を指示する
    - architect は以下の設計判断を含む初期提案を作成し、critic に SendMessage で送信する:
@@ -69,10 +85,11 @@ architect（設計提案者）と critic（批評者）による Multi-Agent Deb
      - 残論点がある場合はその内容（ADRのトレードオフとして記載する）
 
 9. `docs/architecture/index.md` の存在を確認する
+10. architect と critic のチームメンバーをシャットダウンし、チームをクリーンアップする
 
 ### Phase 4: 議論ログの保存（任意）
 
-10. Debate の全ラウンドの内容を `docs/architecture/debate-log/debate.md` に保存する
+11. Debate の全ラウンドの内容を `docs/architecture/debate-log/debate.md` に保存する
     - 各ラウンドの提案・批評・合意事項を時系列で記録する
     - 将来の設計判断の根拠として参照できるようにする
 
