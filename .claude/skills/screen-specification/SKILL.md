@@ -109,12 +109,13 @@ scr-XXX-[name]/
 ```
 docs/screen-specification/
 ├── index.md                     # 画面一覧・画面遷移図・共通挙動仕様
-├── shared-components.md         # 共通コンポーネント仕様（サイドバー等）
+├── shared-components.md         # グローバル共通コンポーネント（複数SCRで共通）
+├── user-experience.md           # ユーザー体験設計（UXシナリオ・設計判断）
 ├── scr-001-[name].md            # 小さい画面: 単一ファイル
 ├── scr-002-[name]/              # 大きい画面: ディレクトリ分割
-│   ├── user-experience.md       # ユーザー体験設計（UXシナリオ・設計判断）
-│   ├── wireframes.md
-│   └── behaviors.md
+│   ├── shared-components.md     # 画面内共通コンポーネント（この画面内で共通）
+│   ├── wireframes-[view].md     # ビュー別ワイヤーフレーム
+│   └── behaviors-[view].md      # ビュー別操作挙動
 └── ...
 ```
 
@@ -125,17 +126,37 @@ docs/screen-specification/
 - 単一ファイル: `scr-[3桁連番]-[画面名の英語略称].md`
 - ディレクトリ分割: `scr-[3桁連番]-[画面名の英語略称]/wireframes.md` + `behaviors.md`
 
-### 共通コンポーネント（shared-components.md）
+### 共通コンポーネント（2層構造）
 
-複数画面で共通のUIコンポーネント（サイドバー、ヘッダー等）は `shared-components.md` に定義し、各画面ファイルからは参照のみ行う。**同じUI要素定義を複数ファイルにコピーしない。**
+共通コンポーネントは**グローバル共通**と**画面内共通**の2層で管理する。**同じUI要素定義を複数ファイルにコピーしない。**
 
-各画面のUI要素定義表では、共通コンポーネントのセクションに以下の形式で参照を記載する:
+#### グローバル共通（shared-components.md）
+
+アプリケーション全体で共通のUIコンポーネント（複数のSCR-xxxをまたいで使用されるもの）を定義する。
+
+- 配置: `docs/screen-specification/shared-components.md`
+- 例: グローバルサイドバー、プロジェクトヘッダー、トースト通知
+- COMP番号（COMP-001, COMP-002, ...）で採番する
+
+#### 画面内共通（scr-xxx-yyy/shared-components.md）
+
+特定の画面ディレクトリ内の複数ビュー・サブ画面で共通のコンポーネントを定義する。グローバルには共通化されないが、画面内では重複を避けたいものが対象。
+
+- 配置: `docs/screen-specification/scr-xxx-yyy/shared-components.md`
+- 例: タスク画面内の詳細ドロワー、ビュー切替ボタングループ
+- グローバルCOMP番号とは別体系とし、名称で参照する
+- グローバル共通コンポーネントへの参照は `../shared-components.md` を指定する
+
+#### 参照の記載形式
+
+各画面のUI要素定義表では、共通コンポーネントのセクションに参照先を明記する:
 
 ```markdown
-### サイドバー（グローバルナビゲーション）
+### グローバル共通コンポーネント
+> グローバル左サイドバーの UI 要素定義・操作は ../shared-components.md (COMP-001) を参照。
 
-> サイドバーの UI 要素定義・共通操作は [shared-components.md](../shared-components.md) を参照。
-> この画面では [画面固有の状態・アクティブ項目] で表示される。
+### 画面内共通コンポーネント
+> タスク詳細ドロワーの UI 要素定義・操作は shared-components.md（タスク画面内）を参照。
 ```
 
 ### 分割の理由
