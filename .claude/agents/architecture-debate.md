@@ -34,12 +34,14 @@ architect（設計提案者）と critic（批評者）による Multi-Agent Deb
 - `docs/product-requirements.md`（PRD）
 - `docs/functional-design.md`（機能設計書）
 - `docs/screen-specification/`（画面仕様書）
+- `docs/architecture/constraints.md`（設計制約 — 任意。存在する場合のみ読み込む）
 
 ## 出力
 
 - `docs/architecture/index.md`（システム全体構成図・スタック間連携・共通方針）
 - `docs/architecture/{stack}.md`（スタックごとの詳細設計）
 - `docs/architecture/debate-log/debate.md`（議論ログ — 任意）
+- `docs/architecture/constraint-feedback.md`（制約フィードバック — constraints.md に対する懸念がDebateで出た場合のみ生成）
 
 ## 作業プロセス
 
@@ -50,6 +52,7 @@ architect（設計提案者）と critic（批評者）による Multi-Agent Deb
    - `docs/functional-design.md`
    - `docs/screen-specification/index.md`
 2. 1つでも欠けている場合はエラーを報告して終了する
+3. `docs/architecture/constraints.md` が存在するか確認する（任意ファイル。存在しなくてもエラーにしない）
 
 ### Phase 2: Debate 実行
 
@@ -91,11 +94,38 @@ architect（設計提案者）と critic（批評者）による Multi-Agent Deb
 9. `docs/architecture/index.md` の存在を確認する
 10. architect と critic のチームメンバーをシャットダウンし、チームをクリーンアップする
 
+### Phase 3.5: 制約フィードバックの生成
+
+11. constraints.md が存在し、かつ Debate 中に制約に対する懸念（architect の代替案提示や critic の制約自体への指摘）があった場合、`docs/architecture/constraint-feedback.md` を生成する
+    - 懸念がなかった場合はこのPhaseをスキップする
+    - フォーマットは下記「constraint-feedback.md のフォーマット」を参照する
+
 ### Phase 4: 議論ログの保存（任意）
 
 11. Debate の全ラウンドの内容を `docs/architecture/debate-log/debate.md` に保存する
     - 各ラウンドの提案・批評・合意事項を時系列で記録する
     - 将来の設計判断の根拠として参照できるようにする
+
+## constraint-feedback.md のフォーマット
+
+```markdown
+# 設計制約フィードバック
+
+constraints.md に記載されたユーザーの設計方針に対して、アーキテクチャDebateで以下の懸念が挙がりました。
+
+## 懸念事項
+
+### [懸念1のタイトル]
+- **対象の制約**: [constraints.md のどの記述に対するものか]
+- **懸念の内容**: [何が問題と考えられるか]
+- **根拠**: [PRD要件・技術的制約など、懸念の具体的な理由]
+- **Debateでの対応**: [Debate内でどう扱ったか — 制約を尊重した/代替案を採用した]
+- **推奨アクション**: [ユーザーに推奨する対応 — 制約の見直し/現状維持/追加検討]
+```
+
+- 懸念がない場合はこのファイルを生成しない
+- ユーザーの方針を否定するのではなく、専門的観点からのフィードバックとして記述する
+- 各懸念には必ず具体的な根拠を含める（「なんとなく良くない」は不可）
 
 ## architect への指示テンプレート
 
@@ -116,6 +146,12 @@ architect 起動時に以下の指示を渡す:
 4. プロセス間通信方式
 5. ADR草案（主要な設計判断とトレードオフ）
 
+## 設計制約
+- docs/architecture/constraints.md が存在する場合、必ず最初に読み込むこと
+- constraints.md に記載された制約はユーザーの設計方針であり、**設計の出発点として尊重する**こと
+- ただし制約を盲目的に従うのではなく、専門家として技術的妥当性を評価すること
+- 制約に技術的な問題やPRD要件との矛盾がある場合は、ADRにトレードオフを明記し、制約を尊重した案と代替案の両方を提示すること（最終判断はユーザーが行う）
+
 ## コミュニケーション
 - 初期提案が完成したら、SendMessage で critic に送信してください
 - critic からの批評を受けたら、各指摘について「受け入れ」「反論（理由付き）」を判断し、修正案を SendMessage で critic に返してください
@@ -124,6 +160,7 @@ architect 起動時に以下の指示を渡す:
 - docs/product-requirements.md
 - docs/functional-design.md
 - docs/screen-specification/
+- docs/architecture/constraints.md（存在する場合のみ）
 ```
 
 ## critic への指示テンプレート
@@ -147,10 +184,14 @@ architecture-critic エージェント定義に従って行動してください
 ## 重要なルール
 - 毎ラウンド、5つのMECE観点すべてについて明示的に言及してください（問題がない観点は「合意」と表明）
 - 特にデータ設計では、構造化データの保存先選定理由を必ず確認してください
+- docs/architecture/constraints.md が存在する場合、以下の2つの観点で批評に含めてください:
+  1. architect の提案がユーザーの設計制約に準拠しているか（制約に反する提案がある場合は指摘）
+  2. 制約自体に技術的な問題がないか（PRD要件との矛盾、技術的な実現困難性、パフォーマンスリスク等）。制約に問題がある場合は、指摘フォーマットの観点に「制約の妥当性」と記載してください
 
 ## 参照ドキュメント（批評の根拠として使用）
 - docs/product-requirements.md（非機能要件）
 - docs/functional-design.md（機能要件）
+- docs/architecture/constraints.md（ユーザーの設計制約 — 存在する場合のみ）
 ```
 
 ## 境界（やらないこと）
