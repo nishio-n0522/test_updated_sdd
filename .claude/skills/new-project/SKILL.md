@@ -34,8 +34,12 @@ Step 1: プロダクト仕様作成（4ドキュメントを順次作成）
   1-3: データモデル設計 → レビュー → ユーザー承認
   1-4: 画面仕様 → レビュー → ユーザー承認    ← 必須（実装仕様の入力）
 
-Step 2: 実装仕様作成（Step 1の全4ドキュメント完了後に開始）
-  前提確認 → 実装仕様(4ドキュメント) → レビュー → ユーザー承認
+Step 2: 実装仕様作成（Step 1の全4ドキュメント完了後に開始、依存順に1つずつ作成）
+  前提確認
+  2-1: アーキテクチャ設計 → レビュー → ユーザー承認
+  2-2: リポジトリ構造定義 → レビュー → ユーザー承認
+  2-3: 開発ガイドライン → レビュー → ユーザー承認
+  2-4: デザインパターン → レビュー → ユーザー承認
   [技術検証が必要な場合: WF3の実行を提案]
 
 Step 3: 用語集作成
@@ -126,15 +130,65 @@ Step 1では4つのドキュメントを **1-1 → 1-2 → 1-3 → 1-4 の順に
 - `docs/data-model.md`
 - `docs/screen-specification/index.md`
 
-1. 上記の前提確認を実施する
-2. `implementation-spec-writer` エージェントを起動する
+Step 2では4つのドキュメントを **2-1 → 2-2 → 2-3 → 2-4 の順に1つずつ** 作成する。この順序は依存関係に基づく（後のドキュメントが前のドキュメントを参照する）。**いずれのステップも省略してはならない。**
+
+### 2-1: アーキテクチャ設計
+
+**前提**: Step 1の全4ドキュメントが承認済みであること。
+
+1. `architecture-writer` エージェントを起動する
    - 入力: PRD + 機能設計書 + 画面仕様書
-   - 出力: `docs/architecture/`, `docs/design-patterns/`, `docs/development-guidelines/`, `docs/repository-structure/`
-3. 出力ディレクトリ内に `index.md` が存在することを確認する
-4. `doc-reviewer` エージェントを起動する
+   - 出力: `docs/architecture/`
+2. `docs/architecture/index.md` の存在を確認する
+3. `doc-reviewer` エージェントを起動する
    - 状況依存スキル: `architecture-design`
-   - 入力: 生成された実装仕様ドキュメント群
-5. 実装仕様 + レビュー結果をユーザーに提示し、承認を待つ
+   - 入力: 生成されたアーキテクチャ設計書
+4. アーキテクチャ設計書 + レビュー結果をユーザーに提示し、承認を待つ
+
+**→ 承認後、2-2に進む**
+
+### 2-2: リポジトリ構造定義
+
+**前提**: `docs/architecture/` が存在し承認済みであること。
+
+1. `repository-structure-writer` エージェントを起動する
+   - 入力: PRD + 機能設計書 + アーキテクチャ設計書
+   - 出力: `docs/repository-structure/`
+2. `docs/repository-structure/index.md` の存在を確認する
+3. `doc-reviewer` エージェントを起動する
+   - 状況依存スキル: `repository-structure`
+   - 入力: 生成されたリポジトリ構造定義書
+4. リポジトリ構造定義書 + レビュー結果をユーザーに提示し、承認を待つ
+
+**→ 承認後、2-3に進む**
+
+### 2-3: 開発ガイドライン
+
+**前提**: `docs/architecture/` と `docs/repository-structure/` が存在し承認済みであること。
+
+1. `development-guidelines-writer` エージェントを起動する
+   - 入力: アーキテクチャ設計書 + リポジトリ構造定義書
+   - 出力: `docs/development-guidelines/`
+2. `docs/development-guidelines/index.md` の存在を確認する
+3. `doc-reviewer` エージェントを起動する
+   - 状況依存スキル: `development-guidelines`
+   - 入力: 生成された開発ガイドライン
+4. 開発ガイドライン + レビュー結果をユーザーに提示し、承認を待つ
+
+**→ 承認後、2-4に進む**
+
+### 2-4: デザインパターン
+
+**前提**: `docs/architecture/` が存在し承認済みであること。
+
+1. `design-patterns-writer` エージェントを起動する
+   - 入力: PRD + 機能設計書 + アーキテクチャ設計書
+   - 出力: `docs/design-patterns/`
+2. `docs/design-patterns/index.md` の存在を確認する
+3. `doc-reviewer` エージェントを起動する
+   - 状況依存スキル: `design-patterns`
+   - 入力: 生成されたデザインパターン
+4. デザインパターン + レビュー結果をユーザーに提示し、承認を待つ
 
 ### 技術検証の提案（条件付き）
 
