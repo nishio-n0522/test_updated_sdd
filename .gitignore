@@ -1,5 +1,2 @@
-<<<<<<< HEAD
 *.local.json
-=======
-*.local.json
->>>>>>> main
+.devcontainer/git-config.local
