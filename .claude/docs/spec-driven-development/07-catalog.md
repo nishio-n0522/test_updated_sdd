@@ -33,7 +33,7 @@
 |---|---|
 | 入力 | `docs/ideas/YYYYMMDD-memo.md`（WF1の出力） |
 | 出力 | 各種仕様ドキュメント（`docs/`）+ GitHub issues + `.issue/` |
-| 起動するAgent | PRD作成 → 機能設計 → 画面仕様 → 実装仕様 → 用語集作成 → issue分解・登録（+ 各ステップでドキュメントレビュー） |
+| 起動するAgent | PRD作成 → 機能設計 → 画面仕様 → データモデル設計 → 実装仕様 → 用語集作成 → issue分解・登録（+ 各ステップでドキュメントレビュー） |
 | 特記事項 | Step 2 で技術検証が必要な場合、WF3 の実行を提案 |
 
 #### S-O3: 技術検証
@@ -75,26 +75,27 @@ Agentが参照するドメイン知識（テンプレート・品質基準・チ
 | S-K2 | `prd-writing` | PRDのテンプレート・品質基準 | PRD作成 | ドキュメントレビュー | WF2 |
 | S-K3 | `functional-design` | 機能設計書のテンプレート・品質基準 | 機能設計 | ドキュメントレビュー | WF2, WF4 |
 | S-K4 | `screen-specification` | 画面仕様書のテンプレート・品質基準 | 画面仕様 | ドキュメントレビュー | WF2, WF4 |
-| S-K5 | `architecture-design` | アーキテクチャ設計のテンプレート・品質基準 | 実装仕様 | ドキュメントレビュー | WF2 |
-| S-K6 | `design-patterns` | デザインパターンのテンプレート・品質基準・カタログ管理 | パターン設計 | 実装仕様, ドキュメントレビュー | WF2, WF3 |
-| S-K7 | `development-guidelines` | 開発ガイドラインのテンプレート・品質基準 | 実装 | 実装仕様 | WF2, WF5 |
-| S-K8 | `repository-structure` | リポジトリ構造のテンプレート・品質基準 | — | 実装仕様 | WF2 |
-| S-K9 | `glossary-creation` | 用語集のテンプレート・品質基準 | 用語集作成 | ドキュメントレビュー | WF2 |
-| S-K10 | `issue-workflow` | issue分解・登録の方法論・フォーマット | issue分解・登録 | — | WF2, WF4 |
-| S-K11 | `doc-review` | ドキュメントレビューの方法論・出力フォーマット・重要度分類 | ドキュメントレビュー | — | WF2, WF3, WF4 |
-| S-K12 | `tech-evaluation` | 技術評価の方法論・比較フレームワーク・選定基準 | 技術評価 | ドキュメントレビュー | WF3 |
-| S-K13 | `poc-workflow` | PoC実装のガイドライン・ディレクトリ構造規約・テンプレート | PoC実装 | — | WF3 |
-| S-K14 | `issue-specification` | issue仕様ドキュメントのテンプレート・品質基準（種別別） | issue仕様作成 | ドキュメントレビュー | WF4 |
-| S-K15 | `implementation-planning` | 実装計画ドキュメント（requirements/design/test-spec/tasklist）のテンプレート・品質基準 | autopilot管理 | — | WF5 |
-| S-K16 | `review-coding` | コーディング規約レビューの方法論・チェックリスト | コーディングレビュー | — | WF5 |
-| S-K17 | `review-architecture` | アーキテクチャレビューの方法論・チェックリスト | アーキテクチャレビュー | — | WF5 |
-| S-K18 | `review-i18n` | i18nレビューの方法論・チェックリスト | i18nレビュー | — | WF5 |
+| S-K5 | `data-model-design` | データモデル設計書のテンプレート・品質基準 | データモデル設計 | ドキュメントレビュー | WF2, WF4 |
+| S-K6 | `architecture-design` | アーキテクチャ設計のテンプレート・品質基準 | 実装仕様 | ドキュメントレビュー | WF2 |
+| S-K7 | `design-patterns` | デザインパターンのテンプレート・品質基準・カタログ管理 | パターン設計 | 実装仕様, ドキュメントレビュー | WF2, WF3 |
+| S-K8 | `development-guidelines` | 開発ガイドラインのテンプレート・品質基準 | 実装 | 実装仕様 | WF2, WF5 |
+| S-K9 | `repository-structure` | リポジトリ構造のテンプレート・品質基準 | — | 実装仕様 | WF2 |
+| S-K10 | `glossary-creation` | 用語集のテンプレート・品質基準 | 用語集作成 | ドキュメントレビュー | WF2 |
+| S-K11 | `issue-workflow` | issue分解・登録の方法論・フォーマット | issue分解・登録 | — | WF2, WF4 |
+| S-K12 | `doc-review` | ドキュメントレビューの方法論・出力フォーマット・重要度分類 | ドキュメントレビュー | — | WF2, WF3, WF4 |
+| S-K13 | `tech-evaluation` | 技術評価の方法論・比較フレームワーク・選定基準 | 技術評価 | ドキュメントレビュー | WF3 |
+| S-K14 | `poc-workflow` | PoC実装のガイドライン・ディレクトリ構造規約・テンプレート | PoC実装 | — | WF3 |
+| S-K15 | `issue-specification` | issue仕様ドキュメントのテンプレート・品質基準（種別別） | issue仕様作成 | ドキュメントレビュー | WF4 |
+| S-K16 | `implementation-planning` | 実装計画ドキュメント（requirements/design/test-spec/tasklist）のテンプレート・品質基準 | autopilot管理 | — | WF5 |
+| S-K17 | `review-coding` | コーディング規約レビューの方法論・チェックリスト | コーディングレビュー | — | WF5 |
+| S-K18 | `review-architecture` | アーキテクチャレビューの方法論・チェックリスト | アーキテクチャレビュー | — | WF5 |
+| S-K19 | `review-i18n` | i18nレビューの方法論・チェックリスト | i18nレビュー | — | WF5 |
 
 ### 7.1.3. Skill 統計
 
 - **オーケストレーター型**: 5件
-- **専門知識型**: 18件
-- **合計**: 23件
+- **専門知識型**: 19件
+- **合計**: 24件
 
 ---
 
@@ -109,9 +110,10 @@ Agentが参照するドメイン知識（テンプレート・品質基準・チ
 | A-G1 | PRD作成 | `agents/prd-writer.md` | `prd-writing` | WF2 | — |
 | A-G2 | 機能設計 | `agents/functional-designer.md` | `functional-design` | WF2, WF4 | WF4で変更仕様モード |
 | A-G3 | 画面仕様 | `agents/screen-spec-writer.md` | `screen-specification` | WF2, WF4 | WF4で変更仕様モード |
-| A-G4 | 実装仕様 | `agents/implementation-spec-writer.md` | `architecture-design` | WF2 | — |
-| A-G5 | 用語集作成 | `agents/glossary-creator.md` | `glossary-creation` | WF2 | — |
-| A-G6 | issue仕様作成 | `agents/issue-spec-writer.md` | `issue-specification` | WF4 | — |
+| A-G4 | データモデル設計 | `agents/data-model-designer.md` | `data-model-design` | WF2, WF4 | WF4で変更仕様モード |
+| A-G5 | 実装仕様 | `agents/implementation-spec-writer.md` | `architecture-design` | WF2 | — |
+| A-G6 | 用語集作成 | `agents/glossary-creator.md` | `glossary-creation` | WF2 | — |
+| A-G7 | issue仕様作成 | `agents/issue-spec-writer.md` | `issue-specification` | WF4 | — |
 
 #### A-G1: PRD作成
 
@@ -144,17 +146,28 @@ Agentが参照するドメイン知識（テンプレート・品質基準・チ
 | 入力（WF4・変更） | 要件 + `docs/screen-specification/`（既存） |
 | 出力（WF4・変更） | 画面変更仕様 |
 
-#### A-G4: 実装仕様
+#### A-G4: データモデル設計
+
+| 項目 | 内容 |
+|---|---|
+| 目的 | データモデル設計書を生成・更新する |
+| コアskill | `data-model-design` |
+| 入力（WF2・新規） | PRD + 機能設計書 + 画面仕様書 |
+| 出力（WF2・新規） | `docs/data-model/` |
+| 入力（WF4・変更） | 要件 + `docs/data-model/`（既存） |
+| 出力（WF4・変更） | データモデル変更仕様 |
+
+#### A-G5: 実装仕様
 
 | 項目 | 内容 |
 |---|---|
 | 目的 | アーキテクチャ・開発ガイドライン・デザインパターン・リポジトリ構造を生成する |
 | コアskill | `architecture-design` |
 | 状況依存skill | `design-patterns`, `development-guidelines`, `repository-structure` |
-| 入力 | PRD + 機能設計書 + 画面仕様書 |
-| 出力 | `docs/architecture.md`, `docs/design-patterns/`, `docs/development-guidelines.md`, `docs/repository-structure.md` |
+| 入力 | PRD + 機能設計書 + 画面仕様書 + データモデル設計書 |
+| 出力 | `docs/architecture/`, `docs/design-patterns/`, `docs/development-guidelines/`, `docs/repository-structure/` |
 
-#### A-G5: 用語集作成
+#### A-G6: 用語集作成
 
 | 項目 | 内容 |
 |---|---|
@@ -163,7 +176,7 @@ Agentが参照するドメイン知識（テンプレート・品質基準・チ
 | 入力 | Step 1〜2 の全出力ドキュメント |
 | 出力 | `docs/glossary.md` |
 
-#### A-G6: issue仕様作成
+#### A-G7: issue仕様作成
 
 | 項目 | 内容 |
 |---|---|
@@ -356,12 +369,12 @@ issueの自律実行を行うAgent。WF5で使用される。
 
 | カテゴリ | 件数 | Agent名 |
 |---|---|---|
-| ドキュメント生成系 | 6 | PRD作成, 機能設計, 画面仕様, 実装仕様, 用語集作成, issue仕様作成 |
+| ドキュメント生成系 | 7 | PRD作成, 機能設計, 画面仕様, データモデル設計, 実装仕様, 用語集作成, issue仕様作成 |
 | 技術検証系 | 3 | 技術評価, PoC実装, パターン設計 |
 | issue管理系 | 2 | issue分解・登録, PRDスコープ検証 |
 | 品質検証系 | 5 | ドキュメントレビュー, コーディングレビュー, アーキテクチャレビュー, i18nレビュー, テスト実行 |
 | autopilot系 | 3 | autopilot管理, 実装, テスト作成 |
-| **合計** | **19** | |
+| **合計** | **20** | |
 
 ### Agent 再利用マトリクス
 
@@ -371,6 +384,7 @@ issueの自律実行を行うAgent。WF5で使用される。
 |---|---|---|---|---|---|---|
 | 機能設計 | — | 新規作成 | — | 変更仕様 | — | オーケストレーターがモード制御 |
 | 画面仕様 | — | 新規作成 | — | 変更仕様 | — | オーケストレーターがモード制御 |
+| データモデル設計 | — | 新規作成 | — | 変更仕様 | — | オーケストレーターがモード制御 |
 | issue分解・登録 | — | 分解+登録 | — | 登録のみ | — | WF4では単一issue登録 |
 | ドキュメントレビュー | — | ○ | ○ | ○ | — | 最多再利用（状況依存skillで対応） |
 
@@ -391,8 +405,8 @@ issueの自律実行を行うAgent。WF5で使用される。
 | 種別 | 名前 |
 |---|---|
 | Skill（オーケストレーター） | `skills/new-project/` |
-| Skill（知識型） | `prd-writing`, `functional-design`, `screen-specification`, `architecture-design`, `design-patterns`, `development-guidelines`, `repository-structure`, `glossary-creation`, `issue-workflow`, `doc-review` |
-| Agent | PRD作成, 機能設計, 画面仕様, 実装仕様, 用語集作成, issue分解・登録, ドキュメントレビュー |
+| Skill（知識型） | `prd-writing`, `functional-design`, `screen-specification`, `data-model-design`, `architecture-design`, `design-patterns`, `development-guidelines`, `repository-structure`, `glossary-creation`, `issue-workflow`, `doc-review` |
+| Agent | PRD作成, 機能設計, 画面仕様, データモデル設計, 実装仕様, 用語集作成, issue分解・登録, ドキュメントレビュー |
 
 ### WF3: 技術検証
 

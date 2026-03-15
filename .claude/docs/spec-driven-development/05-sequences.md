@@ -101,6 +101,7 @@ sequenceDiagram
 | エージェント | PRD作成 | `agents/prd-writer.md` | `prd-writing` | PRDを生成 |
 | エージェント | 機能設計 | `agents/functional-designer.md` | `functional-design` | 機能設計書を生成 |
 | エージェント | 画面仕様 | `agents/screen-spec-writer.md` | `screen-specification` | 画面仕様書を生成 |
+| エージェント | データモデル設計 | `agents/data-model-designer.md` | `data-model-design` | データモデル設計書を生成 |
 | エージェント | 実装仕様 | `agents/implementation-spec-writer.md` | `architecture-design` | アーキテクチャ・ガイドライン等を生成 |
 | エージェント | 用語集作成 | `agents/glossary-creator.md` | `glossary-creation` | 用語集を生成 |
 | エージェント | issue分解・登録 | `agents/issue-decomposer.md` | `issue-workflow` | 仕様をissueに分解しGitHubに登録 |
@@ -115,6 +116,7 @@ sequenceDiagram
     participant A1 as PRD作成<br>Agent
     participant A2 as 機能設計<br>Agent
     participant A3 as 画面仕様<br>Agent
+    participant ADM as データモデル設計<br>Agent
     participant A4 as 実装仕様<br>Agent
     participant A5 as 用語集作成<br>Agent
     participant A6 as issue分解・登録<br>Agent
@@ -148,6 +150,14 @@ sequenceDiagram
         Orch->>AR: サブエージェント起動（skill: screen-specification）
         AR-->>Orch: レビュー結果
         Orch->>User: 画面仕様書 + レビュー結果
+        User->>Orch: 承認 / FB
+
+        Orch->>ADM: サブエージェント起動（入力: PRD + 機能設計書 + 画面仕様書）
+        Note right of ADM: skill: data-model-design
+        ADM-->>Orch: docs/data-model/
+        Orch->>AR: サブエージェント起動（skill: data-model-design）
+        AR-->>Orch: レビュー結果
+        Orch->>User: データモデル設計書 + レビュー結果
         User->>Orch: 承認 / FB
     end
 
@@ -194,7 +204,7 @@ sequenceDiagram
 
 1. **二重レビュー**: 各ドキュメント生成後、レビューAgentによる品質検証とユーザーレビューの二重ゲートを設ける（共通パターン 6.0）。レビューAgentは生成Agentと同じskillを読み込み、定義された品質基準に基づいて検証する
 2. **WF1 依存**: アイデアメモ（`docs/ideas/YYYYMMDD-memo.md`）をWF1から受け取る。アイデアの壁打ちはコンテキスト分離のため独立WFとして切り出されている
-3. **Step 1 の内部順序**: PRD → 機能設計書 → 画面仕様書 は上流から下流への依存関係があるため、順次実行する
+3. **Step 1 の内部順序**: PRD → 機能設計書 → 画面仕様書 → データモデル設計書 は上流から下流への依存関係があるため、順次実行する。データモデルは画面仕様のUX要件を反映するため、画面仕様の後に作成する
 4. **エージェントの独立性**: 各エージェントは独立したコンテキストで動作し、必要な入力のみを受け取る。これによりコンテキスト肥大化を防ぐ
 5. **WF3 との連携**: Step 2 で技術検証が必要な場合、オーケストレーターが WF3 の実行を提案する。WF3 は独立ワークフローとして単独実行される
 6. **エージェント再利用**: 機能設計・画面仕様・issue分解・登録エージェントは WF4 でも再利用される
