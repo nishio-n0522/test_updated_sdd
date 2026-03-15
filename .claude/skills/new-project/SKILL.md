@@ -31,8 +31,8 @@ allowed-tools: Read, Write, Edit, Bash, Agent, Glob
 Step 1: プロダクト仕様作成（4ドキュメントを順次作成）
   1-1: PRD作成 → レビュー → ユーザー承認
   1-2: 機能設計 → レビュー → ユーザー承認    ← 必須（実装仕様の入力）
-  1-3: データモデル設計 → レビュー → ユーザー承認
-  1-4: 画面仕様 → レビュー → ユーザー承認    ← 必須（実装仕様の入力）
+  1-3: 画面仕様 → レビュー → ユーザー承認    ← 必須（実装仕様の入力）
+  1-4: データモデル設計 → レビュー → ユーザー承認
 
 Step 2: 実装仕様作成（Step 1の全4ドキュメント完了後に開始、依存順に1つずつ作成）
   前提確認
@@ -91,22 +91,7 @@ Step 1では4つのドキュメントを **1-1 → 1-2 → 1-3 → 1-4 の順に
 
 **→ 承認後、1-3に進む**
 
-### 1-3: データモデル設計
-
-**前提**: `docs/product-requirements.md` と `docs/functional-design.md` が存在し承認済みであること。
-
-1. `data-model-designer` エージェントを起動する
-   - 入力: PRD + 機能設計書
-   - 出力: `docs/data-model.md`
-2. `docs/data-model.md` の存在を確認する
-3. `doc-reviewer` エージェントを起動する
-   - 状況依存スキル: `data-model-design`
-   - 入力: 生成されたデータモデル設計書
-4. データモデル設計書 + レビュー結果をユーザーに提示し、承認を待つ
-
-**→ 承認後、1-4に進む**
-
-### 1-4: 画面仕様
+### 1-3: 画面仕様
 
 **前提**: `docs/product-requirements.md` と `docs/functional-design.md` が存在し承認済みであること。
 
@@ -119,6 +104,21 @@ Step 1では4つのドキュメントを **1-1 → 1-2 → 1-3 → 1-4 の順に
    - 入力: 生成された画面仕様書
 4. 画面仕様書 + レビュー結果をユーザーに提示し、承認を待つ
 
+**→ 承認後、1-4に進む**
+
+### 1-4: データモデル設計
+
+**前提**: `docs/product-requirements.md`、`docs/functional-design.md`、`docs/screen-specification/index.md` が存在し承認済みであること。
+
+1. `data-model-designer` エージェントを起動する
+   - 入力: PRD + 機能設計書 + 画面仕様書
+   - 出力: `docs/data-model/`
+2. `docs/data-model/index.md` の存在を確認する
+3. `doc-reviewer` エージェントを起動する
+   - 状況依存スキル: `data-model-design`
+   - 入力: 生成されたデータモデル設計書
+4. データモデル設計書 + レビュー結果をユーザーに提示し、承認を待つ
+
 **→ 承認後、Step 2に進む**
 
 ## Step 2: 実装仕様作成
@@ -127,7 +127,7 @@ Step 1では4つのドキュメントを **1-1 → 1-2 → 1-3 → 1-4 の順に
 
 - `docs/product-requirements.md`
 - `docs/functional-design.md`
-- `docs/data-model.md`
+- `docs/data-model/index.md`
 - `docs/screen-specification/index.md`
 
 Step 2では4つのドキュメントを **2-1 → 2-2 → 2-3 → 2-4 の順に1つずつ** 作成する。この順序は依存関係に基づく（後のドキュメントが前のドキュメントを参照する）。**いずれのステップも省略してはならない。**
@@ -220,7 +220,7 @@ issue登録はドキュメントレビューの対象外（構造的な処理の
 
 - [ ] `docs/product-requirements.md` が承認済み
 - [ ] `docs/functional-design.md` が承認済み
-- [ ] `docs/data-model.md` が承認済み
+- [ ] `docs/data-model/` が承認済み
 - [ ] `docs/screen-specification/` が承認済み
 - [ ] `docs/architecture/` が承認済み
 - [ ] `docs/design-patterns/` が承認済み

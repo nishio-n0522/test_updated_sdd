@@ -35,7 +35,7 @@ flowchart TD
         S2b["3. 用語集作成"]
         S3["4. issue分解・登録"]
 
-        S1 -->|"PRD, 機能設計書, 画面仕様書"| S2
+        S1 -->|"PRD, 機能設計書, 画面仕様書,\nデータモデル設計書"| S2
         S2 -->|"アーキテクチャ設計書,\nデザインパターン,\n開発ガイドライン"| S2b
         S2b -->|"用語集"| S3
     end
@@ -54,7 +54,7 @@ flowchart TD
 
 | ステップ | 概要 | 入力 | 出力 |
 |---|---|---|---|
-| 1. プロダクト仕様作成 | アイデアメモからプロダクト仕様を生成 | `docs/ideas/YYYYMMDD-memo.md`（WF1の出力） | `docs/product-requirements.md`, `docs/functional-design.md`, `docs/screen-specification/` |
+| 1. プロダクト仕様作成 | アイデアメモからプロダクト仕様を生成 | `docs/ideas/YYYYMMDD-memo.md`（WF1の出力） | `docs/product-requirements.md`, `docs/functional-design.md`, `docs/screen-specification/`, `docs/data-model/` |
 | 2. 実装仕様作成 | 実装に必要な技術仕様を定義 | `docs/product-requirements.md`, `docs/functional-design.md`, `docs/screen-specification/` | `docs/architecture.md`, `docs/design-patterns/`, `docs/development-guidelines.md`, `docs/repository-structure.md` |
 | 3. 用語集作成 | プロダクトで使用する用語を定義 | ステップ1〜2の全出力ドキュメント | `docs/glossary.md` |
 | 4. issue分解・登録 | 仕様を適切な粒度に分解しissueとして登録 | `docs/product-requirements.md`, `docs/functional-design.md`, `docs/screen-specification/`, `docs/architecture.md`, `docs/design-patterns/`, `docs/development-guidelines.md`, `docs/repository-structure.md`, `docs/glossary.md` | GitHub issues + `.issue/` 詳細ドキュメント（※詳細構造は後続で確定） |

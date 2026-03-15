@@ -16,14 +16,13 @@
 flowchart TD
     PRD["PRD\n（Why / What）"]
     FD["機能設計書\n（What の構造化）"]
-    DM["データモデル設計書\n（What / データ構造詳細）"]
     SS["画面仕様書\n（How / UI詳細）"]
+    DM["データモデル設計書\n（What / データ構造詳細）"]
     TS["テスト仕様書\n（検証方法）"]
     CODE["実装コード・テストコード"]
 
     PRD --> FD
-    FD --> SS --> TS --> CODE
-    FD --> DM --> TS
+    FD --> SS --> DM --> TS --> CODE
 ```
 
 | ドキュメント | 責務 | 答える問い | 記載する内容 | 記載しない内容 |
@@ -129,7 +128,7 @@ flowchart TD
 | アイデアメモ | `docs/ideas/YYYYMMDD-memo.md` |
 | PRD | `docs/product-requirements.md` |
 | 機能設計書 | `docs/functional-design.md` |
-| データモデル設計書 | `docs/data-model.md` |
+| データモデル設計書 | `docs/data-model/` |
 | 画面仕様書 | `docs/screen-specification/` |
 | テスト仕様書 | `docs/test-specification/` |
 | アーキテクチャ設計書 | `docs/architecture.md` |

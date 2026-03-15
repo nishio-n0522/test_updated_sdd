@@ -97,7 +97,7 @@ issueの作成は `/create-issue` で対話的に行い、実行は `/autopilot`
 
 - **product-requirements.md** - プロダクト要求定義書
 - **functional-design.md** - 機能設計書（機能分解 + ドメインモデル概念 + 画面構成概要）
-- **data-model.md** - データモデル設計書（エンティティのフィールド定義・型・制約・ER図）
+- **data-model/** - データモデル設計書（index.md + 層/ドメイン別ファイル。エンティティのフィールド定義・型・制約・ER図）
 - **screen-specification/** - 画面仕様書（詳細な画面レイアウト・操作挙動、画面ごとに分割）
 - **architecture/** - 技術仕様書（index.md + スタック別ファイル）
 - **repository-structure/** - リポジトリ構造定義書（index.md + スタック別ファイル）
